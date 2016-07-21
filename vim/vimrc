@@ -1,0 +1,138 @@
+set encoding=utf-8
+scriptencoding utf-8
+
+" various plugins need this
+set nocompatible
+
+"""""""""""""""""""""""""""""
+
+syntax enable
+
+source $HOME/.vim/vundle.vim
+
+set hidden
+set autoindent
+set smartindent
+set cindent
+set expandtab
+set tabstop=4
+set softtabstop=4
+
+
+"""
+" set filetype=on # turned on by next ones
+filetype plugin on
+filetype indent on
+
+
+""" searching
+set incsearch
+set ignorecase
+set smartcase
+set hls
+" turn highlight of search on/off
+noremap <Space> :set hlsearch! hlsearch?<CR>
+
+
+""" mouse
+set mouse=a
+
+
+""" UI
+set showcmd
+set wildmenu
+set wildmode=longest,list,full
+set shiftwidth=4
+set showmatch   " jump to previous { when inserting }
+set ruler       " position in file
+set number
+set scrolloff=2 " keep n lines visible
+set laststatus=2
+
+" solarized colour schema
+set background=dark
+
+
+" urxvt
+set t_Co=16
+let g:solarized_termcolors=16
+colorscheme solarized
+
+
+""" highlight some interesing things
+
+" parentheses
+highlight MatchParen cterm=none ctermbg=none ctermfg=white
+" trailing whitespace
+highlight TrailingWhitespace ctermbg=DarkMagenta guibg=DarkMagenta
+match TrailingWhitespace /\s\+$/
+" protect from colour schema
+:autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+
+
+""" key bindings
+
+let mapleader = ","
+noremap <Leader>a :Ack
+noremap <Leader>b :CtrlPBuffer <CR>
+noremap <Leader>n :NERDTreeToggle <CR>
+noremap <Leader>g :GundoToggle <CR>
+noremap <Leader>t :TagbarToggle <CR>
+
+noremap <leader>y :SyntasticToggleMode <CR>
+noremap <Leader>sp :setlocal spell spelllang=de <CR>
+noremap <Leader>sn :set nospell  <CR>
+
+" SVN
+noremap <Leader>sb :VCSBlame <CR>
+noremap <Leader>sl :VCSLog <CR>
+" GIT
+noremap <Leader>gb :Gblame <CR>
+noremap <Leader>gl :Glog <CR>
+
+""" move between windows
+
+nmap <silent> <C-J> :wincmd j <CR>
+nmap <silent> <C-K> :wincmd k <CR>
+nmap <silent> <C-H> :wincmd h <CR>
+nmap <silent> <C-L> :wincmd l <CR>
+
+set cursorline
+" set cursorcolumn
+
+""""""""""""""""""""""""""""""""""""""""
+"""  additinal plugin configuration  """
+
+""" airline
+
+let g:airline_powerline_fonts = 0
+let g:airline_theme='solarized'
+
+
+""" nerdtree
+
+let g:tagbar_left = 1
+
+
+""" syntastic
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_haskell_checkers = ['hdevtools']    " works
+let g:syntastic_enable_perl_checker = 1     " disabled for security reasons
+let g:syntastic_perl_checkers = ['perl']    " works
+let g:syntastic_python_python_exec = '/usr/bin/python2'
+
+
+""" neocomplete
+
+let g:neocomplete#enable_at_startup = 1
+
+
+""" neosnippet
+
+" imap <C-k> <Plug>(neosnippet_expand_or_jump)
+" smap <C-k> <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k> <Plug>(neosnippet_expand_target)
