@@ -20,7 +20,7 @@ set softtabstop=4
 
 
 """
-" set filetype=on # turned on by next ones
+" set filetype=on # turned on be next ones
 filetype plugin on
 filetype indent on
 
@@ -52,16 +52,20 @@ set laststatus=2
 " solarized colour schema
 set background=dark
 
-
 " urxvt
 set t_Co=16
 let g:solarized_termcolors=16
 colorscheme solarized
 
+" goto last position when opening
+autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
 
 """ highlight some interesing things
 
-" parentheses
+" parentesis
 highlight MatchParen cterm=none ctermbg=none ctermfg=white
 " trailing whitespace
 highlight TrailingWhitespace ctermbg=DarkMagenta guibg=DarkMagenta
@@ -83,11 +87,9 @@ noremap <leader>y :SyntasticToggleMode <CR>
 noremap <Leader>sp :setlocal spell spelllang=de <CR>
 noremap <Leader>sn :set nospell  <CR>
 
-" SVN
-noremap <Leader>sb :VCSBlame <CR>
+noremap <Leader>sb :VCSBlame <CR>  " SVN
 noremap <Leader>sl :VCSLog <CR>
-" GIT
-noremap <Leader>gb :Gblame <CR>
+noremap <Leader>gb :Gblame <CR>    " GIT
 noremap <Leader>gl :Glog <CR>
 
 """ move between windows
@@ -99,6 +101,10 @@ nmap <silent> <C-L> :wincmd l <CR>
 
 set cursorline
 " set cursorcolumn
+
+runtime macros/justify.vim
+" not yet ..
+noremap <Leader>J gq _j<CR>
 
 """"""""""""""""""""""""""""""""""""""""
 """  additinal plugin configuration  """
@@ -136,3 +142,8 @@ let g:neocomplete#enable_at_startup = 1
 " imap <C-k> <Plug>(neosnippet_expand_or_jump)
 " smap <C-k> <Plug>(neosnippet_expand_or_jump)
 " xmap <C-k> <Plug>(neosnippet_expand_target)
+
+
+""" tmux-complete
+
+let g:tmuxcomplete#trigger = 'completefunc'
