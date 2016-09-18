@@ -35,7 +35,7 @@ noremap <Space> :set hlsearch! hlsearch?<CR>
 
 
 """ mouse
-set mouse=a
+" set mouse=a
 
 
 """ UI
@@ -84,12 +84,20 @@ noremap <Leader>g :GundoToggle <CR>
 noremap <Leader>t :TagbarToggle <CR>
 
 noremap <leader>y :SyntasticToggleMode <CR>
+
+" word processer
+" justify text (needs `par`)
+noremap <Leader>j :!par -w80 -j <CR>
+" spellchecking
 noremap <Leader>sp :setlocal spell spelllang=de <CR>
 noremap <Leader>sn :set nospell  <CR>
 
-noremap <Leader>sb :VCSBlame <CR>  " SVN
+" SVN
+noremap <Leader>sb :VCSBlame <CR>
 noremap <Leader>sl :VCSLog <CR>
-noremap <Leader>gb :Gblame <CR>    " GIT
+
+" GIT
+noremap <Leader>gb :Gblame <CR>
 noremap <Leader>gl :Glog <CR>
 
 """ move between windows
@@ -101,10 +109,6 @@ nmap <silent> <C-L> :wincmd l <CR>
 
 set cursorline
 " set cursorcolumn
-
-runtime macros/justify.vim
-" not yet ..
-noremap <Leader>J gq _j<CR>
 
 """"""""""""""""""""""""""""""""""""""""
 """  additinal plugin configuration  """
