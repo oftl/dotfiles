@@ -20,7 +20,7 @@ set softtabstop=4
 
 
 """
-" set filetype=on # turned on by next ones
+" set filetype=on # turned on be next ones
 filetype plugin on
 filetype indent on
 
@@ -35,7 +35,7 @@ noremap <Space> :set hlsearch! hlsearch?<CR>
 
 
 """ mouse
-set mouse=a
+" set mouse=a
 
 
 """ UI
@@ -52,16 +52,20 @@ set laststatus=2
 " solarized colour schema
 set background=dark
 
-
 " urxvt
 set t_Co=16
 let g:solarized_termcolors=16
 colorscheme solarized
 
+" goto last position when opening
+autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
 
 """ highlight some interesing things
 
-" parentheses
+" parentesis
 highlight MatchParen cterm=none ctermbg=none ctermfg=white
 " trailing whitespace
 highlight TrailingWhitespace ctermbg=DarkMagenta guibg=DarkMagenta
@@ -80,12 +84,18 @@ noremap <Leader>g :GundoToggle <CR>
 noremap <Leader>t :TagbarToggle <CR>
 
 noremap <leader>y :SyntasticToggleMode <CR>
+
+" word processer
+" justify text (needs `par`)
+noremap <Leader>j :!par -w80 -j <CR>
+" spellchecking
 noremap <Leader>sp :setlocal spell spelllang=de <CR>
 noremap <Leader>sn :set nospell  <CR>
 
 " SVN
 noremap <Leader>sb :VCSBlame <CR>
 noremap <Leader>sl :VCSLog <CR>
+
 " GIT
 noremap <Leader>gb :Gblame <CR>
 noremap <Leader>gl :Glog <CR>
@@ -136,3 +146,8 @@ let g:neocomplete#enable_at_startup = 1
 " imap <C-k> <Plug>(neosnippet_expand_or_jump)
 " smap <C-k> <Plug>(neosnippet_expand_or_jump)
 " xmap <C-k> <Plug>(neosnippet_expand_target)
+
+
+""" tmux-complete
+
+let g:tmuxcomplete#trigger = 'completefunc'
