@@ -1,0 +1,23 @@
+defscrollback 5120
+
+startup_message off
+
+backtick 1 5 5 ${HOME}/bin/freemem.sh
+backtick 2 15 15 ${HOME}/bin/df-root.sh
+backtick 3 15 15 ${HOME}/bin/df-home.sh
+backtick 4 15 15 ${HOME}/bin/online.sh
+backtick 5 15 15 ${HOME}/bin/battery.sh
+
+caption always
+caption string "%{= c}%-Lw%{= w}%n%f %t%{= c}%+Lw%<" 
+
+hardstatus alwayslastline 
+#hardstatus string "%{=kr}%{m}%H %{w}/ %{r}%l %{w}/ %{y}"%1`" %{w}/ %{g}"%2`" "%3`" %{w}/ %{m}"%5`" %{b}%= %D, %d.%m %Y %c:%s"
+# ac centered
+hardstatus string "%{=kr}%{m}%H %{w}/ %{r}%l %{w}/ %{y}"%1`" %{w}/ %{g}"%2`" "%3`" %{w}/ %{m}"%4`" %{b}%= %{m}"%5`"%= %D, %d.%m %Y %c:%s"
+
+escape ^Ww
+
+# toggle fullscreen
+bind f eval "caption splitonly" "hardstatus ignore"
+bind F eval "caption always"    "hardstatus alwayslastline"
