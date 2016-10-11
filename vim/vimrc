@@ -87,9 +87,10 @@ noremap <leader>y :SyntasticToggleMode <CR>
 
 " word processer
 " justify text (needs `par`)
-noremap <Leader>j :!par -w80 -j <CR>
+noremap <Leader>j vip :!par -w80 -j <CR>
 " spellchecking
 noremap <Leader>sp :setlocal spell spelllang=de <CR>
+noremap <Leader>spe :setlocal spell spelllang=en <CR>
 noremap <Leader>sn :set nospell  <CR>
 
 " SVN
