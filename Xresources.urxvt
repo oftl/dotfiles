@@ -1,6 +1,6 @@
-! second fallback font used in case of unknown glyphs (eg powerline)
-URxvt*font: xft:Inconsolata:size=14:antialias=true,xft:Hack:size=14:antialias=true;
-
+! fallback font used in case of unknown glyphs
+! URxvt*font: xft:Dejavu Sans Mono:size=12:antialias=true,xft:Hack:size=12:antialias=true;
+URxvt*font: xft:Dejavu Sans Mono:size=12
 
 URxvt*buffered: true
 URxvt*cursorBlink: true
@@ -11,9 +11,10 @@ URxvt*scrollBar: false
 Urxvt*secondaryScroll:  true    # Enable Shift-PageUp/Down in screen
 URxvt*saveLines: 5000
 URxvt*termName: rxvt-unicode
+URxvt*intensityStyles: false
 
 
-URxvt.perl-ext-common: default,matcher,clipboard,tabbedex
+URxvt.perl-ext-common: default,matcher,clipboard,tabbedex,resize-font
 URxvt.url-launcher: firefox
 URxvt.matcher.button: 3
 URxvt.keysym.C-Delete:    perl:matcher:last
@@ -34,7 +35,15 @@ URxvt.tabbed.tabbar-bg:     0
 URxvt.tabbed.tab-fg:        3
 URxvt.tabbed.tab-bg:        0
 !URxvt.tabbed.new-button: false
-!URxvt.tabbed.autohide: true
+URxvt.tabbed.autohide: true
+
+
+! resize-font
+URxvt.resize-font.bigger: C-Prior
+URxvt.resize-font.smaller: C-Next
+URxvt.resize-font.reset: C-Home
+URxvt.resize-font.show: C-End
+
 
 URxvt.cursorBlink: false
 URxvt.cursorUnderline: true
