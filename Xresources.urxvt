@@ -14,7 +14,8 @@ URxvt*termName: rxvt-unicode
 URxvt*intensityStyles: false
 
 
-URxvt.perl-ext-common: default,matcher,clipboard,tabbedex,resize-font
+! URxvt.perl-ext-common: default,matcher,clipboard,tabbedex,resize-font
+URxvt.perl-ext-common: default,matcher,clipboard,tabbedex,font-size
 URxvt.url-launcher: firefox
 URxvt.matcher.button: 3
 URxvt.keysym.C-Delete:    perl:matcher:last
@@ -38,12 +39,22 @@ URxvt.tabbed.tab-bg:        0
 URxvt.tabbed.autohide: true
 
 
-! resize-font
-URxvt.resize-font.bigger: C-Prior
-URxvt.resize-font.smaller: C-Next
-URxvt.resize-font.reset: C-Home
-URxvt.resize-font.show: C-End
+! ! perl:resize-font
+! URxvt.resize-font.bigger: C-Prior
+! URxvt.resize-font.smaller: C-Next
+! URxvt.resize-font.reset: C-Home
+! URxvt.resize-font.show: C-End
 
+
+! perl:font-size (from AUR)
+URxvt.keysym.C-Prior:       font-size:increase
+URxvt.keysym.C-Next:        font-size:decrease
+URxvt.keysym.C-Shift-Prior: font-size:incsave
+URxvt.keysym.C-Shift-Next:  font-size:decsave
+! URxvt.keysym.C-S-Up:   font-size:incglobal
+! URxvt.keysym.C-S-Down: font-size:decglobal
+URxvt.keysym.C-Home:  font-size:reset
+URxvt.keysym.C-End:  font-size:show
 
 URxvt.cursorBlink: false
 URxvt.cursorUnderline: true
