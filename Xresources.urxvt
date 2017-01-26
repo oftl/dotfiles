@@ -38,14 +38,6 @@ URxvt.tabbed.tab-bg:        0
 !URxvt.tabbed.new-button: false
 URxvt.tabbed.autohide: true
 
-
-! ! perl:resize-font
-! URxvt.resize-font.bigger: C-Prior
-! URxvt.resize-font.smaller: C-Next
-! URxvt.resize-font.reset: C-Home
-! URxvt.resize-font.show: C-End
-
-
 ! perl:font-size (from AUR)
 URxvt.keysym.C-Prior:       font-size:increase
 URxvt.keysym.C-Next:        font-size:decrease

@@ -1,0 +1,148 @@
+set $mod Mod4
+
+# welcome context menu button
+# set $mod keycode:135
+
+focus_follows_mouse no
+
+font pango:monospace 14
+
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec dmenu_run
+
+# lock screen
+bindsym $mod+Escape exec "i3lock --image .wallpaper.png --show-failed-attempts"
+# lock screen funny
+bindsym $mod+Shift+Escape exec "i3lock --image .wallpaper_win95.png --show-failed-attempts --pointer=win"
+
+# change focus
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+h focus left
+bindsym $mod+semicolon focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+w split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# focus the parent container
+bindsym $mod+p focus parent
+
+# focus the child container
+bindsym $mod+c focus child
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+bindsym $mod+Shift+space move scratchpad
+bindsym $mod+space scratchpad show
+
+workspace_auto_back_and_forth yes
+
+# all colors from
+# https://github.com/tobiaszwaszak/i3wm/blob/master/config
+#
+client.focused          #002b36 #586e75 #fdf6e3 #268bd2
+client.focused_inactive #002b36 #073642 #839496 #073642
+client.unfocused        #002b36 #073642 #839496 #073642
+client.urgent           #002b36 #dc322f #fdf6e3 #002b36
+
+bar {
+    id bar-top
+    status_command i3status --config ~/.i3/status_top.conf
+    position top
+    separator_symbol " / "
+    colors {
+        background #002b36
+        statusline #839496
+        separator  #586e75
+        focused_workspace  #b58900 #b58900 #002b36
+        active_workspace   #586e75 #586e75 #002b36
+        inactive_workspace #073642 #002b36 #839496
+        urgent_workspace   #dc322f #dc322f #fdf6e3
+    }
+}
+
+bar {
+    id bar-bottom
+    status_command i3status --config ~/.i3/status_bottom.conf
+    position bottom
+    separator_symbol " / "
+    workspace_buttons no
+    colors {
+        background         #002b36
+        statusline         #839496
+        separator          #586e75
+        focused_workspace  #b58900 #b58900 #002b36
+        active_workspace   #586e75 #586e75 #002b36
+        inactive_workspace #073642 #002b36 #839496
+        urgent_workspace   #dc322f #dc322f #fdf6e3
+    }
+}
+

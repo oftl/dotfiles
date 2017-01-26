@@ -1,0 +1,11 @@
+! xev
+!
+keycode 108 = Mode_switch
+keycode 20 = minus underscore ssharp
+keycode 34 = bracketleft braceleft udiaeresis Udiaeresis
+keycode 47 = semicolon colon odiaeresis Odiaeresis
+keycode 48 = apostrophe quotedbl adiaeresis Adiaeresis
+keycode 30 = u U udiaeresis Udiaeresis u U
+keycode 32 = o O odiaeresis Odiaeresis o O
+keycode 38 = a A adiaeresis Adiaeresis a A
+keycode 39 = s S ssharp ssharp s S
