@@ -50,12 +50,10 @@ set scrolloff=2 " keep n lines visible
 set laststatus=2
 
 " solarized colour schema
-set background=dark
-
-" urxvt
-set t_Co=16
-let g:solarized_termcolors=16
 colorscheme solarized
+
+set background=dark
+let g:solarized_termcolors=256
 
 " goto last position when opening
 autocmd BufReadPost *
@@ -79,19 +77,29 @@ match TrailingWhitespace /\s\+$/
 let mapleader = ","
 noremap <Leader>a :Ack
 noremap <Leader>b :CtrlPBuffer <CR>
-noremap <Leader>n :NERDTreeToggle <CR>
 noremap <Leader>g :GundoToggle <CR>
-noremap <Leader>t :TagbarToggle <CR>
 
 noremap <leader>y :SyntasticToggleMode <CR>
 
 " word processer
 " justify text (needs `par`)
-noremap <Leader>j vip :!par -w80 -j <CR>
+noremap <Leader>aj vip :!par -w80 -j <CR>
+" center
+noremap <Leader>ac vip :center 80 <CR>
+" right align
+noremap <Leader>ar vip :right 80 <CR>
 " spellchecking
 noremap <Leader>sp :setlocal spell spelllang=de <CR>
 noremap <Leader>spe :setlocal spell spelllang=en <CR>
 noremap <Leader>sn :set nospell  <CR>
+
+" coding
+noremap <Leader>n :NERDTreeTabsToggle <CR>
+noremap <Leader>t :TagbarToggle <CR>
+" noremap <Leader>c :TagbarToggle <CR> :NERDTreeTabsToggle <CR>
+
+" remove trailing whitespace
+noremap <Leader>tw :%s/ *$//g <CR>
 
 " SVN
 noremap <Leader>sb :VCSBlame <CR>
@@ -100,6 +108,24 @@ noremap <Leader>sl :VCSLog <CR>
 " GIT
 noremap <Leader>gb :Gblame <CR>
 noremap <Leader>gl :Glog <CR>
+
+" MRU
+noremap <Leader>mru :MRU<CR>
+
+" tabs
+noremap <Leader>tn :tabnew<CR>
+noremap <Leader>1 1gt<CR>
+noremap <Leader>2 2gt<CR>
+noremap <Leader>3 3gt<CR>
+noremap <Leader>4 4gt<CR>
+noremap <Leader>5 5gt<CR>
+noremap <Leader>6 6gt<CR>
+noremap <Leader>7 7gt<CR>
+noremap <Leader>7 8gt<CR>
+noremap <Leader>9 9gt<CR>
+
+""" not yet :( """" LDAP
+""" not yet :( """noremap <Leader>o :/usr/bin/lbdbq %s <CR>
 
 """ move between windows
 
@@ -116,31 +142,43 @@ set cursorline
 
 """ airline
 
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 let g:airline_theme='solarized'
 
 
-""" nerdtree
+""" tagbar
 
 let g:tagbar_left = 1
 
+""" nerdtree
+
+let g:NERDTreeWinPos = 'right'
 
 """ syntastic
+
+let g:syntastic_error_symbol = '✘'
+let g:syntastic_warning_symbol = "▲"
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
 let g:syntastic_haskell_checkers = ['hdevtools']    " works
 let g:syntastic_enable_perl_checker = 1     " disabled for security reasons
 let g:syntastic_perl_checkers = ['perl']    " works
 let g:syntastic_python_python_exec = '/usr/bin/python2'
 
+" let syntastic thing java checker already loaded, thus preventing compilation
+" of java files (very slow!)
+let g:loaded_syntastic_java_javac_checker = 1
+
 
 """ neocomplete
 
 let g:neocomplete#enable_at_startup = 1
-
+let g:neocomplete#enable_smart_case = 1
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 """ neosnippet
 
@@ -152,3 +190,15 @@ let g:neocomplete#enable_at_startup = 1
 """ tmux-complete
 
 let g:tmuxcomplete#trigger = 'completefunc'
+
+nmap <silent> <Leader>lb :call LbdbExpandCurLine()<RETURN>
+vmap <silent> <Leader>lb :call LbdbExpandVisual()<RETURN>
+imap <silent> <Leader>lb <ESC>:call LbdbExpandCurLine()<RETURN>A
+
+
+""" delimitMate
+
+let delimitMate_expand_cr = 1
+
+""" numbers
+let g:numbers_exclude = ['help', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'vundle']
