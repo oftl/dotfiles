@@ -12,6 +12,11 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
+" colourschema with more contrast
+" Plugin 'romainl/flattened'
+" insane list of colour schemas
+" Plugin 'victorcbr/vim-colorschemes'
+
 
 """ org
 
@@ -19,6 +24,9 @@ Plugin 'vim-ctrlspace/vim-ctrlspace'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs.git'
 Plugin 'majutsushi/tagbar'
+" Plugin 'mileszs/ack.vim'
+" Plugin 'ctrlpvim/ctrlp.vim'
+" :set paste automatically
 Plugin 'ConradIrwin/vim-bracketed-paste'
 
 
@@ -30,11 +38,16 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Shougo/neosnippet.vim'
 Plugin 'Shougo/neosnippet-snippets'
+" Plugin 'Valloric/YouCompleteMe'
 Plugin 'wellle/tmux-complete.vim'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'ElmCast/elm-vim'
 Plugin 'yegappan/mru'
 
+" Plugin 'Shougo/vimshell.vim'
+" Plugin 'Shougo/vimproc'
+
+" Plugin 'vim-scripts/Vim-JDE'
 
 """ syntaxe
 
@@ -51,12 +64,16 @@ Plugin 'Raimondi/delimitMate'
 
 " searching
 Plugin 'vim-scripts/EasyMotion'
+" Plugin 'justinmk/vim-sneak'
+" Plugin 't9md/vim-smalls'
 
 " misc
 Plugin 'wincent/command-t'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'godlygeek/tabular'
+" Plugin 'mhinz/vim-signify'
 Plugin 'tpope/vim-dispatch'
+" Plugin 'klen/python-mode'
 Plugin 'myusuf3/numbers.vim.git'
 
 " mail

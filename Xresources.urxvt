@@ -1,6 +1,6 @@
 ! fallback font used in case of unknown glyphs
 ! URxvt*font: xft:Dejavu Sans Mono:size=12:antialias=true,xft:Hack:size=12:antialias=true;
-URxvt*font: xft:Dejavu Sans Mono:size=12
+URxvt*font: xft:Dejavu Sans Mono:size=16
 
 URxvt*buffered: true
 URxvt*cursorBlink: true
@@ -15,7 +15,9 @@ URxvt*intensityStyles: false
 
 
 ! URxvt.perl-ext-common: default,matcher,clipboard,tabbedex,resize-font
-URxvt.perl-ext-common: default,matcher,clipboard,tabbedex,font-size
+! Shift+PageUp/-Down keypresses are consumed by the outer tabbing instance
+! scrollback does not work without explicit mousefocus (click)
+URxvt.perl-ext-common: default,matcher,clipboard,font-size
 URxvt.url-launcher: firefox
 URxvt.matcher.button: 3
 URxvt.keysym.C-Delete:    perl:matcher:last
@@ -37,6 +39,14 @@ URxvt.tabbed.tab-fg:        3
 URxvt.tabbed.tab-bg:        0
 !URxvt.tabbed.new-button: false
 URxvt.tabbed.autohide: true
+
+
+! ! perl:resize-font
+! URxvt.resize-font.bigger: C-Prior
+! URxvt.resize-font.smaller: C-Next
+! URxvt.resize-font.reset: C-Home
+! URxvt.resize-font.show: C-End
+
 
 ! perl:font-size (from AUR)
 URxvt.keysym.C-Prior:       font-size:increase
