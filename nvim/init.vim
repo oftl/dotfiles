@@ -1,5 +1,5 @@
-source $HOME/.nvim/plugins
-source $HOME/.nvim/project
+source $HOME/.config/nvim/plugins
+source $HOME/.config/nvim/project
 
 """
 """ CONFIG
@@ -77,7 +77,7 @@ colorscheme desert
 " http://vim.wikia.com/wiki/Switch_color_schemes<Paste>
 
 set background=dark
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
 
 """
 """ AUTO MOVEMENT
@@ -129,14 +129,11 @@ noremap <silent><Leader>p :Welcome <CR>
 noremap <silent><Leader>cd :colorscheme desert<CR>
 noremap <silent><Leader>cl :colorscheme morning<CR>
 
-" highlight same concept (2)
+" highlight same word
 noremap <Leader>h :exe "let HlUnderCursor=exists(\"HlUnderCursor\")?HlUnderCursor*-1+1:1"<CR>
 
 noremap <Leader>a :Ack
-noremap <Leader>b :CtrlPBuffer <CR>
 noremap <Leader>g :GundoToggle <CR>
-
-noremap <leader>y :SyntasticToggleMode <CR>
 
 " word processer
 " justify text (needs `par`)
@@ -153,23 +150,11 @@ noremap <Leader>sn :set nospell  <CR>
 " coding
 noremap <Leader>n :NERDTreeToggle <CR>
 noremap <Leader>t :TagbarToggle <CR>
-" noremap <Leader>c :TagbarToggle <CR> :NERDTreeTabsToggle <CR>
 
 " remove trailing whitespace
 noremap <Leader>tw :%s/ *$//g <CR>
 " remove leading whitespace
 noremap <Leader>tl :%s/^ *//g <CR>
-
-" " SVN
-" noremap <Leader>sb :VCSBlame <CR>
-" noremap <Leader>sl :VCSLog <CR>
-"
-" " GIT
-" noremap <Leader>gb :Gblame <CR>
-" noremap <Leader>gl :Glog <CR>
-"
-" " MRU
-" noremap <Leader>mru :MRU<CR>
 
 " tabs
 noremap <Leader>tn :tabnew<CR>
@@ -243,48 +228,6 @@ let g:NERDSpaceDelims = 1
 let g:NERDCommentEmptyLines = 1
 " let g:NERDTrimTrailingWhitespace = 1
 let g:NERDDefaultAlign = 'left'
-
-" """ syntastic
-"
-" let g:syntastic_error_symbol = '✘'
-" let g:syntastic_warning_symbol = "▲"
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-"
-" let g:syntastic_haskell_checkers = ['hdevtools']    " works
-" let g:syntastic_enable_perl_checker = 1     " disabled for security reasons
-" let g:syntastic_perl_checkers = ['perl']    " works
-" let g:syntastic_python_python_exec = '/usr/bin/python3'
-"
-" " let syntastic thing java checker already loaded, thus preventing compilation
-" " of java files (very slow!)
-" let g:loaded_syntastic_java_javac_checker = 1
-"
-
-" """ neocomplete
-"
-" let g:neocomplete#enable_at_startup = 1
-" let g:neocomplete#enable_smart_case = 1
-" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-"
-" """ neosnippet
-"
-" " imap <C-k> <Plug>(neosnippet_expand_or_jump)
-" " smap <C-k> <Plug>(neosnippet_expand_or_jump)
-" " xmap <C-k> <Plug>(neosnippet_expand_target)
-"
-"
-" """ tmux-complete
-"
-" let g:tmuxcomplete#trigger = 'completefunc'
-"
-" nmap <silent> <Leader>lb :call LbdbExpandCurLine()<RETURN>
-" vmap <silent> <Leader>lb :call LbdbExpandVisual()<RETURN>
-" imap <silent> <Leader>lb <ESC>:call LbdbExpandCurLine()<RETURN>A
-
 
 """ delimitMate
 
