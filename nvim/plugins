@@ -1,0 +1,68 @@
+source $HOME/.nvim/plug.vim
+call plug#begin('~/.nvim/plugged')
+
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/YankRing.vim'
+Plug 'moll/vim-bbye'
+Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-abolish'
+
+Plug 'amiorin/vim-project'
+Plug 'mhinz/vim-startify'
+Plug 'vim-ctrlspace/vim-ctrlspace'
+
+" pacman -Ss fzf
+Plug 'junegunn/fzf.vim'
+Plug 'wincent/ferret'
+
+" completion
+Plug 'roxma/nvim-completion-manager'
+
+" php
+Plug 'StanAngeloff/php.vim'
+Plug 'stephpy/vim-php-cs-fixer'
+Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+Plug 'phpactor/phpactor', {'do': 'composer install'} " completion
+Plug 'roxma/ncm-phpactor'  " completion
+Plug 'arnaud-lb/vim-php-namespace'
+Plug 'joonty/vdebug'
+" Plug 'tobyS/pdv'
+" Plug 'tobyS/vmustache'
+
+Plug 'neomake/neomake'
+" PHP Mess Detector
+" PHP Static Analysis Tool
+" PHP Code Sniffer
+
+" python
+Plug 'davidhalter/jedi'
+
+" VCS
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'           " assist fugitive
+Plug 'vim-scripts/vcscommand.vim'  " CVS, SVN, SVK, git, bzr, and hg
+Plug 'mhinz/vim-signify'
+
+" any lang
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'majutsushi/tagbar'
+
+" :set paste automatically
+Plug 'ConradIrwin/vim-bracketed-paste'
+
+""" syntaxe
+" Plug 'ekalinin/Dockerfile.vim'
+" Plug 'ElmCast/elm-vim'
+" Plug 'tmux-plugins/vim-tmux'
+
+" Plug 'tpope/vim-surround'
+" Plug 'matchit.zip'
+Plug 'sjl/gundo.vim'
+Plug 'vim-scripts/EasyMotion'
+Plug 'myusuf3/numbers.vim'
+
+call plug#end()
