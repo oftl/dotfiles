@@ -189,6 +189,33 @@ endif
 set background=dark
 colorscheme solarized
 
+" set statusline=%F%m%r%h%w%=[%p%%]\ [%l/%c]\ [%b/0x%B]\ [%f/%{&ff}/%Y]
+"
+" airline/lightline show --INSERT-- nice too
+set noshowmode
+
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified'],
+      \             [ 'charvalue', 'position' ],
+      \           ],
+      \   'right': [
+      \              [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'git', 'fileformat', 'fileencoding', 'filetype' ],
+      \            ]
+      \ },
+      \ 'component': {
+      \   'charvalue': '%b 0x%B',
+      \   'position': '%o 0x%O',
+      \ },
+      \ 'component_function': {
+      \   'git': 'fugitive#statusline'
+      \ },
+      \ }
+
 " session management
 let g:session_directory = "~/.config/nvim/session"
 let g:session_autoload = "no"
@@ -227,9 +254,6 @@ set linebreak
 set breakindent
 set showbreak="b> "
 set textwidth=79
-
-" ignored ?!
-set statusline=%F%m%r%h%w%=[%p%%]\ [%l/%c]\ [%b/0x%B]\ [%f/%{&ff}/%Y]
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
