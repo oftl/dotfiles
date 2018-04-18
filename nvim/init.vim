@@ -124,6 +124,8 @@ Plug 'docunext/closetag.vim'
 
 " let plugins do .!
 " Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-speeddating'  " better <c-a> <c-z>
 
 call plug#end()
 
