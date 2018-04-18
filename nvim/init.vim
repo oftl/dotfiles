@@ -3,6 +3,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
+
 " Plug 'justinmk/vim-sneak'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -16,8 +17,7 @@ Plug 'majutsushi/tagbar'
 " Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'             " hmm ..?
-Plug 'junegunn/fzf.vim'                 " pacman -S community/fzf
-                                        " b0rken
+Plug 'junegunn/fzf.vim'                 " pacman -S community/fzf ... b0rken?
 
 "" Vim-Session
 Plug 'xolox/vim-misc'
@@ -28,7 +28,6 @@ Plug 'xolox/vim-session'
 " Plug 'Shougo/deoplete.nvim'
 " Plug 'honza/vim-snippets'
 
-
 "*****************************************************************************
 "" Custom bundles
 "*****************************************************************************
@@ -37,13 +36,11 @@ Plug 'xolox/vim-session'
 "" Elm Bundle
 Plug 'elmcast/elm-vim'
 
-
 " haskell
 "" Haskell Bundle
 Plug 'eagletmt/neco-ghc'
 Plug 'dag/vim2hs'
 Plug 'pbrisbin/vim-syntax-shakespeare'
-
 
 " javascript
 "" Javascript Bundle
@@ -52,12 +49,10 @@ Plug 'jelera/vim-javascript-syntax'
 " JavaScript bundle for vim, this bundle provides syntax highlighting and improved indentation.
 " Plug 'pangloss/vim-javascript'
 
-
 " python
 "" Python Bundle
 Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-
 
 "*****************************************************************************
 "*****************************************************************************
@@ -114,7 +109,6 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'tmux-plugins/vim-tmux'
 
-"hello there"
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/matchit.zip'
 Plug 'sjl/gundo.vim'
@@ -122,15 +116,19 @@ Plug 'myusuf3/numbers.vim'
 
 Plug 'altercation/vim-colors-solarized'
 
-Plug 'docunext/closetag.vim'    " close <tags> when </ is encounterd or C-_
-Plug 'corntrace/bufexplorer'
+" close <tags> when </ is encounterd or C-_
+Plug 'docunext/closetag.vim'
 
+" meh
+" Plug 'corntrace/bufexplorer'
+
+" let plugins do .!
+" Plug 'tpope/vim-repeat'
 
 call plug#end()
 
 " Required:
 filetype plugin indent on
-
 
 "*****************************************************************************
 "" Basic Setup
@@ -273,7 +271,6 @@ if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
 endif
 
-
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
@@ -302,7 +299,6 @@ nnoremap <silent> <F3> :NERDTreeToggle<CR>
 
 " terminal emulation
 nnoremap <silent> <leader>sh :terminal<CR>
-
 
 "*****************************************************************************
 "" Autocmd Rules
@@ -365,6 +361,8 @@ noremap <silent><Leader>b6 :buffer 6<CR>
 noremap <silent><Leader>b7 :buffer 7<CR>
 noremap <silent><Leader>b8 :buffer 8<CR>
 noremap <silent><Leader>b9 :buffer 9<CR>
+" Goto Buffer!
+nnoremap <Leader>b :ls<CR>:b<Space>
 
 "" Close buffer
 noremap <leader>c :bd<CR>
@@ -489,6 +487,16 @@ vmap > >gv
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+set path=.,**
+nnoremap <Leader>f :find *
+nnoremap <Leader>s :sfind *
+nnoremap <Leader>v :vert sfind *
+nnoremap <Leader>t :tabfind *
+nnoremap <Leader>F :find <C-R>=expand('%:h').'/*'<CR>
+nnoremap <Leader>S :sfind <C-R>=expand('%:h').'/*'<CR>
+nnoremap <Leader>V :vert sfind <C-R>=expand('%:h').'/*'<CR>
+nnoremap <Leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
+
 "*****************************************************************************
 "" Custom configs
 "*****************************************************************************
@@ -498,12 +506,10 @@ vnoremap K :m '<-2<CR>gv=gv
 let g:elm_setup_keybindings = 0
 let g:elm_format_autosave = 1
 
-
 " syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:elm_syntastic_show_warnings = 1
-
 
 " haskell
 let g:haskell_conceal_wide = 1
@@ -511,13 +517,10 @@ let g:haskell_multiline_strings = 1
 let g:necoghc_enable_detailed_browse = 1
 autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
 
-
 " javascript
 let g:javascript_enable_domhtmlcss = 1
 
-
 " php
-
 
 " python
 " vim-python
@@ -545,7 +548,6 @@ let python_highlight_all = 1
 " polyglot
 " Default highlight is better than polyglot
 let g:polyglot_disabled = ['python', 'elm']
-
 
 "*****************************************************************************
 "" Convenience variables
