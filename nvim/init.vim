@@ -23,7 +23,7 @@ Plug 'junegunn/fzf.vim'                 " pacman -S community/fzf ... b0rken?
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 
-" TODO see if i want or need snippets       
+" TODO see if i want or need snippets
 " Plug 'SirVer/ultisnips'
 " Plug 'Shougo/deoplete.nvim'
 " Plug 'honza/vim-snippets'
@@ -244,6 +244,28 @@ let no_buffers_menu=1
 set gcr=a:blinkon0
 set scrolloff=3
 
+" " If cursor is in first or last line of window, scroll to middle line.
+" function s:MaybeMiddle()
+"   if winline() == 1 || winline() == winheight(0)
+"     normal! zz
+"   endif
+" endfunction
+"
+" nnoremap <silent> n n:call <SID>MaybeMiddle()<CR>
+" nnoremap <silent> N N:call <SID>MaybeMiddle()<CR>
+
+" " highlight stuff (moved to plugins... :/)
+" " parentesis
+" highlight MatchParen cterm=none ctermbg=none ctermfg=white
+" " trailing whitespace
+" highlight TrailingWhitespace ctermbg=DarkMagenta guibg=DarkMagenta
+" match TrailingWhitespace /\s\+$/
+" " protect from colour schema
+" autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+
+" " highlight same concept (1)
+" autocmd CursorMoved * exe exists("HlUnderCursor")?HlUnderCursor?printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\')):'match none':""
+
 "" Status bar
 set laststatus=2
 
@@ -296,8 +318,8 @@ let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-nnoremap <silent> <F3> :NERDTreeToggle<CR>
+let g:NERDTreeWinPos = 'left'
+" nnoremap <silent> <F2> :NERDTreeFind<CR>
 
 " terminal emulation
 nnoremap <silent> <leader>sh :terminal<CR>
@@ -336,7 +358,46 @@ set autoread
 "*****************************************************************************
 noremap <silent><Leader>, :blast<CR>
 
+" pretty print
+"" XML
+"" old" noremap <leader>px :%s/></>\r</g<CR>:0<CR>=:$<CR>
+noremap <Leader>x :%s/></>\r</g<CR> gg=G<CR>
+
+" hm ?
+" augroup XML
+"     autocmd!
+"     autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+" augroup END
+
+" visual settings
+noremap <silent><Leader>cd :colorscheme desert<CR>
+noremap <silent><Leader>cl :colorscheme morning<CR>
+
+" numbers
+noremap <silent> <Leader>nt :NumbersToggle<CR>
+
+" highlight same word
+noremap <Leader>h :exe "let HlUnderCursor=exists(\"HlUnderCursor\")?HlUnderCursor*-1+1:1"<CR>
+
 noremap <Leader>a :Ack
+noremap <Leader>g :GundoToggle <CR>
+
+" word processer
+" justify text (needs `par`)
+noremap <Leader>aj vip :!par -w80 -j <CR>
+" center
+noremap <Leader>ac vip :center 80 <CR>
+" right align
+noremap <Leader>ar vip :right 80 <CR>
+" spellchecking
+noremap <Leader>sp :setlocal spell spelllang=de <CR>
+noremap <Leader>spe :setlocal spell spelllang=en <CR>
+noremap <Leader>sn :set nospell  <CR>
+
+" remove trailing whitespace
+noremap <Leader>tw :%s/ *$//g <CR>
+" remove leading whitespace
+noremap <Leader>tl :%s/^ *//g <CR>
 
 " tabs
 noremap <silent><Leader>tn :tabnew<CR>
@@ -368,6 +429,11 @@ nnoremap <Leader>b :ls<CR>:b<Space>
 
 "" Close buffer
 noremap <leader>c :bd<CR>
+
+" quit quick
+noremap <Leader>. :quit<CR>
+noremap <leader><leader> <c-^>
+noremap <Leader>el 0D
 
 noremap <silent><Leader>s :Startify <CR>
 noremap <silent><Leader>p :Welcome <CR>
@@ -424,10 +490,12 @@ nnoremap <leader>sc :CloseSession<CR>
 nnoremap <Leader>dp vip d
 nnoremap <Leader>dy vip y
 
+" panels and the like
+nnoremap <leader>nt :NERDTreeToggle <CR> :TagbarToggle <CR>
 noremap <Leader>n :NERDTreeTabsToggle
 noremap <Leader>t :TagbarToggle
 noremap <Leader>nn :NumbersToggle<CR>
-noremap <Leader>c :close <CR>
+" signify
 
 "" Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
@@ -469,6 +537,8 @@ nnoremap <silent> <leader>e :FZF -m<CR>
 
 " Tagbar
 let g:tagbar_autofocus = 1
+let g:tagbar_vertical = 25
+let g:tagbar_left = 1
 
 "" Copy/Paste/Cut
 if has('unnamedplus')
@@ -594,7 +664,49 @@ let g:polyglot_disabled = ['python', 'elm']
 
 " delmitMate
 let delimitMate_expand_space=1
+let delimitMate_expand_cr = 1
+
+" numbers
+let g:numbers_exclude = ['help', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'vundle']
 
 " indentLine
 let g:indentLine_bufTypeExclude = ['help', 'terminal']
 let g:indentLine_bufNameExclude = ['NERDTree*', '__Tagbar__*']
+
+" phpactor
+" http://phpactor.github.io/phpactor/vim-plugin.html
+"
+" Include use statement
+nmap <Leader>u :call phpactor#UseAdd()<CR>
+" Invoke the context menu
+nmap <Leader>mm :call phpactor#ContextMenu()<CR>
+" Goto definition of class or class member under the cursor
+nmap <Leader>o :call phpactor#GotoDefinition()<CR>
+" Transform the classes in the current file
+nmap <Leader>tt :call phpactor#Transform()<CR>
+" Generate a new class (replacing the current file)
+nmap <Leader>cc :call phpactor#ClassNew()<CR>
+" Extract method from selection
+vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
+
+" php-cs-fixer
+nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
+nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+
+""" neomake
+call neomake#configure#automake('rw', 500)
+
+" fzf, mnemonic: <f>ind file
+noremap <silent><Leader>f :Files <CR>
+" ferret, mnemonic: <a>ck (like perl-ack)
+noremap <silent><Leader>a :Ack <CR>
+
+""" signify
+let g:signify_vcs_list = [ 'git', 'svn' ]
+nnoremap <leader>gt :SignifyToggle<CR>
+nnoremap <leader>gh :SignifyToggleHighlight<CR>
+nnoremap <leader>gr :SignifyRefresh<CR>
+nnoremap <leader>gd :SignifyDebug<CR>
+
+""" gutentags
+let g:gutentags_ctags_exclude = ['.cache', '.yarn', '.git', '.svn']
