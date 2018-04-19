@@ -1,3 +1,31 @@
+"TODO
+"<C-Ctrl> hjkl move window
+"<C-Shift> hjkl resize window
+
+"hide NERDTree/tagbar on :Gblame (and possibly others)
+
+"read NERDTree docs
+"fix vue stuffs
+
+source $HOME/.nvim/conf.d/plug.vim
+
+let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
+
+if !filereadable(vimplug_exists)
+  if !executable("curl")
+    echoerr "You have to install curl or first install vim-plug yourself!"
+    execute "q!"
+  endif
+  echo "Installing Vim-Plug..."
+  echo ""
+  silent !\curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  let g:not_finish_vimplug = "yes"
+
+  autocmd VimEnter * PlugInstall
+endif
+
+let mapleader=','
+
 call plug#begin(expand('~/.config/nvim/plugged'))
 
 "*****************************************************************************
@@ -13,11 +41,16 @@ Plug 'itchyny/lightline.vim'
 " Plug 'vim-airline/vim-airline'          " pacman -S community/powerline-fonts
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Raimondi/delimitMate'             " <S-Tab> jump over
-Plug 'majutsushi/tagbar'
+P lug 'majutsushi/tagbar'
 " Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'             " hmm ..?
+
+" find things
+Plug 'junegunn/fzf'                 " pacman -S community/fzf ... b0rken?
 Plug 'junegunn/fzf.vim'                 " pacman -S community/fzf ... b0rken?
+Plug 'wincent/ferret'   " pacman -Ss ripgrep
+Plug 'wincent/loupe'    " enhance search
 
 "" Vim-Session
 Plug 'xolox/vim-misc'
@@ -28,8 +61,11 @@ Plug 'xolox/vim-session'
 " Plug 'Shougo/deoplete.nvim'
 " Plug 'honza/vim-snippets'
 
+" :set paste automatically
+Plug 'ConradIrwin/vim-bracketed-paste'
+
 "*****************************************************************************
-"" Custom bundles
+"" LANG
 "*****************************************************************************
 
 " elm
@@ -51,7 +87,7 @@ Plug 'jelera/vim-javascript-syntax'
 
 " python
 "" Python Bundle
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
 "*****************************************************************************
@@ -64,31 +100,30 @@ Plug 'amiorin/vim-project'
 Plug 'mhinz/vim-startify'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
-" pacman -Ss ripgrep
-Plug 'wincent/ferret'
-Plug 'wincent/loupe'    "enhance search
-
 " completion
-" pacman -S community/python-mistune community/python-jediw community/python-setproctitle extra/psutils
+" arch: community/python-mistune community/python-jediw community/python-setproctitle extra/psutils
 Plug 'roxma/nvim-completion-manager'
-
-"" php
-Plug 'phpactor/phpactor', {'do': 'composer install'} " completion
-Plug 'roxma/ncm-phpactor'  " completion
 
 " Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 " Plug 'autozimu/LanguageClient-neovim'
 " requires jetbrains/phpstorm-stubs
 " composer require felixfbecker/language-server
 
-" php
+"" php
+Plug 'phpactor/phpactor', {'do': 'composer install'}
+Plug 'roxma/ncm-phpactor'
 Plug 'StanAngeloff/php.vim'         "syntax
 Plug 'stephpy/vim-php-cs-fixer'
 Plug 'arnaud-lb/vim-php-namespace'
-Plug 'joonty/vdebug'
 " php-doc generation
 " Plug 'tobyS/pdv'
 " Plug 'tobyS/vmustache'
+
+" xdebug integration
+Plug 'joonty/vdebug'
+
+"" typescript
+" Plug 'mhartington/nvim-typescript'
 
 Plug 'neomake/neomake'
 " PHP Mess Detector         yaourt phpmd
@@ -111,7 +146,7 @@ Plug 'tmux-plugins/vim-tmux'
 
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/matchit.zip'
-Plug 'sjl/gundo.vim'
+
 Plug 'myusuf3/numbers.vim'
 
 Plug 'altercation/vim-colors-solarized'
@@ -123,14 +158,22 @@ Plug 'docunext/closetag.vim'
 " Plug 'corntrace/bufexplorer'
 
 " let plugins do .!
-" Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-speeddating'  " better <c-a> <c-z>
 
+Plug 'sjl/gundo.vim'
+
+Plug 'iCyMind/NeoSolarized'
+
+Plug 'vim-scripts/EasyMotion'
+Plug 'kshenoy/vim-signature'
+
+""" legacy """
+" Plug 'tpope/vim-abolish'
+
 call plug#end()
 
-" Required:
-filetype plugin indent on
 
 "*****************************************************************************
 "" Basic Setup
@@ -143,9 +186,6 @@ set fileencodings=utf-8
 " XXX WTF ?
 "" Fix backspace indent
 set backspace=indent,eol,start
-
-"" Map leader to ,
-let mapleader=','
 
 "" Directories for swp files
 set nobackup
@@ -197,6 +237,9 @@ endif
 
 set background=dark
 colorscheme solarized
+
+" Required:
+filetype plugin indent on
 
 " set statusline=%F%m%r%h%w%=[%p%%]\ [%l/%c]\ [%b/0x%B]\ [%f/%{&ff}/%Y]
 "
@@ -315,14 +358,14 @@ let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
+let g:nerdtree_tabs_focus_on_files=0
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
 let g:NERDTreeWinPos = 'left'
 " nnoremap <silent> <F2> :NERDTreeFind<CR>
 
 " terminal emulation
-nnoremap <silent> <leader>sh :terminal<CR>
+nnoremap <silent> <Leader>sh :terminal<CR>
 
 "*****************************************************************************
 "" Autocmd Rules
@@ -360,8 +403,8 @@ noremap <silent><Leader>, :blast<CR>
 
 " pretty print
 "" XML
-"" old" noremap <leader>px :%s/></>\r</g<CR>:0<CR>=:$<CR>
-noremap <Leader>x :%s/></>\r</g<CR> gg=G<CR>
+"" old" noremap <Leader>px :%s/></>\r</g<CR>:0<CR>=:$<CR>
+noremap <Leader>px :%s/></>\r</g<CR> gg=G<CR>
 
 " hm ?
 " augroup XML
@@ -372,9 +415,6 @@ noremap <Leader>x :%s/></>\r</g<CR> gg=G<CR>
 " visual settings
 noremap <silent><Leader>cd :colorscheme desert<CR>
 noremap <silent><Leader>cl :colorscheme morning<CR>
-
-" numbers
-noremap <silent> <Leader>nt :NumbersToggle<CR>
 
 " highlight same word
 noremap <Leader>h :exe "let HlUnderCursor=exists(\"HlUnderCursor\")?HlUnderCursor*-1+1:1"<CR>
@@ -428,11 +468,11 @@ noremap <silent><Leader>b9 :buffer 9<CR>
 nnoremap <Leader>b :ls<CR>:b<Space>
 
 "" Close buffer
-noremap <leader>c :bd<CR>
+noremap <Leader>c :bd<CR>
 
 " quit quick
 noremap <Leader>. :quit<CR>
-noremap <leader><leader> <c-^>
+noremap <Leader><Leader> <c-^>
 noremap <Leader>el 0D
 
 noremap <silent><Leader>s :Startify <CR>
@@ -481,24 +521,26 @@ noremap <Leader>gr :Gremove<CR>
 nnoremap <Leader>go :.Gbrowse<CR>
 
 " session management
-nnoremap <leader>so :OpenSession<Space>
-nnoremap <leader>ss :SaveSession<Space>
-nnoremap <leader>sd :DeleteSession<CR>
-nnoremap <leader>sc :CloseSession<CR>
+nnoremap <Leader>so :OpenSession<Space>
+nnoremap <Leader>ss :SaveSession<Space>
+nnoremap <Leader>sd :DeleteSession<CR>
+nnoremap <Leader>sc :CloseSession<CR>
 
 " delete/yank paragraph
 nnoremap <Leader>dp vip d
 nnoremap <Leader>dy vip y
 
 " panels and the like
-nnoremap <leader>nt :NERDTreeToggle <CR> :TagbarToggle <CR>
-noremap <Leader>n :NERDTreeTabsToggle
-noremap <Leader>t :TagbarToggle
+nnoremap <Leader>nt :NERDTreeToggle <CR> :TagbarToggle <CR>
+noremap <Leader>n :NERDTreeTabsToggle <CR>
+noremap <Leader>t :TagbarToggle <CR>
+
+" numbers
 noremap <Leader>nn :NumbersToggle<CR>
 " signify
 
 "" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
+nnoremap <Leader>. :lcd %:p:h<CR>
 
 "" Opens an edit command with the path of the currently edited file filled in
 noremap <Leader>ee :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -517,8 +559,8 @@ if executable('rg')
 endif
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>e :FZF -m<CR>
+nnoremap <silent> <Leader>b :Buffers<CR>
+nnoremap <silent> <Leader>e :FZF -m<CR>
 
 " snippets
 " let g:UltiSnipsExpandTrigger="<tab>"
@@ -559,15 +601,16 @@ vmap > >gv
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-set path=.,**
-nnoremap <Leader>f :find *
-nnoremap <Leader>s :sfind *
-nnoremap <Leader>v :vert sfind *
-nnoremap <Leader>t :tabfind *
-nnoremap <Leader>F :find <C-R>=expand('%:h').'/*'<CR>
-nnoremap <Leader>S :sfind <C-R>=expand('%:h').'/*'<CR>
-nnoremap <Leader>V :vert sfind <C-R>=expand('%:h').'/*'<CR>
-nnoremap <Leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
+" TODO consolidate with other mappings
+" set path=.,**
+" nnoremap <Leader>f :find *
+" nnoremap <Leader>s :sfind *
+" nnoremap <Leader>v :vert sfind *
+" nnoremap <Leader>t :tabfind *
+" nnoremap <Leader>F :find <C-R>=expand('%:h').'/*'<CR>
+" nnoremap <Leader>S :sfind <C-R>=expand('%:h').'/*'<CR>
+" nnoremap <Leader>V :vert sfind <C-R>=expand('%:h').'/*'<CR>
+" nnoremap <Leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
 
 "*****************************************************************************
 "" Custom configs
@@ -603,16 +646,16 @@ augroup vimrc-python
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
 
-" jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#smart_auto_mappings = 0
+" " jedi-vim
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#goto_assignments_command = "<Leader>g"
+" let g:jedi#goto_definitions_command = "<Leader>d"
+" let g:jedi#documentation_command = "K"
+" let g:jedi#usages_command = "<Leader>n"
+" let g:jedi#rename_command = "<Leader>r"
+" let g:jedi#show_call_signatures = "0"
+" let g:jedi#completions_command = "<C-Space>"
+" let g:jedi#smart_auto_mappings = 0
 
 " Syntax highlight
 let python_highlight_all = 1
@@ -690,23 +733,28 @@ nmap <Leader>cc :call phpactor#ClassNew()<CR>
 vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
 
 " php-cs-fixer
-nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
-nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+nnoremap <silent><Leader>pcd :call PhpCsFixerFixDirectory()<CR>
+nnoremap <silent><Leader>pcf :call PhpCsFixerFixFile()<CR>
 
 """ neomake
 call neomake#configure#automake('rw', 500)
 
 " fzf, mnemonic: <f>ind file
-noremap <silent><Leader>f :Files <CR>
+noremap <silent><Leader>f :Files<CR>
 " ferret, mnemonic: <a>ck (like perl-ack)
 noremap <silent><Leader>a :Ack <CR>
 
 """ signify
 let g:signify_vcs_list = [ 'git', 'svn' ]
-nnoremap <leader>gt :SignifyToggle<CR>
-nnoremap <leader>gh :SignifyToggleHighlight<CR>
-nnoremap <leader>gr :SignifyRefresh<CR>
-nnoremap <leader>gd :SignifyDebug<CR>
+nnoremap <Leader>gt :SignifyToggle<CR>
+nnoremap <Leader>gh :SignifyToggleHighlight<CR>
+nnoremap <Leader>gr :SignifyRefresh<CR>
+nnoremap <Leader>gd :SignifyDebug<CR>
 
 """ gutentags
 let g:gutentags_ctags_exclude = ['.cache', '.yarn', '.git', '.svn']
+
+source $HOME/.nvim/conf.d/php_man.vim
+source $HOME/.nvim/conf.d/project.vim
+source $HOME/.nvim/conf.d/sclable.vim
+source $HOME/.nvim/conf.d/xdebug-mrv-cockpit.vim
