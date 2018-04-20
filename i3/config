@@ -5,6 +5,9 @@ set $mod Mod4
 
 focus_follows_mouse no
 
+# bender
+font pango:monospace 12
+# gkar
 font pango:monospace 18
 
 bindsym $mod+Return exec i3-sensible-terminal
@@ -132,28 +135,30 @@ bindsym $mod+Ctrl+u exec setxkbmap us
 
 # workspace_auto_back_and_forth yes
 
-# all colors from
-# https://github.com/tobiaszwaszak/i3wm/blob/master/config
-#
-client.focused          #002b36 #586e75 #fdf6e3 #268bd2
-client.focused_inactive #002b36 #073642 #839496 #073642
-client.unfocused        #002b36 #073642 #839496 #073642
-client.urgent           #002b36 #dc322f #fdf6e3 #002b36
+## all colors from
+## https://github.com/tobiaszwaszak/i3wm/blob/master/config
+
+# solarzied
+#client.focused          #002b36 #586e75 #fdf6e3 #268bd2
+#client.focused_inactive #002b36 #073642 #839496 #073642
+#client.unfocused        #002b36 #073642 #839496 #073642
+#client.urgent           #002b36 #dc322f #fdf6e3 #002b36
 
 bar {
     id bar-top
     status_command i3status --config ~/.i3/status_top.conf
     position top
     separator_symbol " / "
-    colors {
-        background #002b36
-        statusline #839496
-        separator  #586e75
-        focused_workspace  #b58900 #b58900 #002b36
-        active_workspace   #586e75 #586e75 #002b36
-        inactive_workspace #073642 #002b36 #839496
-        urgent_workspace   #dc322f #dc322f #fdf6e3
-    }
+    # solarzied
+    # colors {
+    #     background #002b36
+    #     statusline #839496
+    #     separator  #586e75
+    #     focused_workspace  #b58900 #b58900 #002b36
+    #     active_workspace   #586e75 #586e75 #002b36
+    #     inactive_workspace #073642 #002b36 #839496
+    #     urgent_workspace   #dc322f #dc322f #fdf6e3
+    # }
 }
 
 bar {
@@ -162,13 +167,14 @@ bar {
     position bottom
     separator_symbol " / "
     workspace_buttons no
-    colors {
-        background         #002b36
-        statusline         #839496
-        separator          #586e75
-        focused_workspace  #b58900 #b58900 #002b36
-        active_workspace   #586e75 #586e75 #002b36
-        inactive_workspace #073642 #002b36 #839496
-        urgent_workspace   #dc322f #dc322f #fdf6e3
-    }
+    # solarzied
+    # colors {
+    #     background         #002b36
+    #     statusline         #839496
+    #     separator          #586e75
+    #     focused_workspace  #b58900 #b58900 #002b36
+    #     active_workspace   #586e75 #586e75 #002b36
+    #     inactive_workspace #073642 #002b36 #839496
+    #     urgent_workspace   #dc322f #dc322f #fdf6e3
+    # }
 }
