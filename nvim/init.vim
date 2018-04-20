@@ -7,6 +7,8 @@
 "read NERDTree docs
 "fix vue stuffs
 
+" change light/dark of (n)vim and urxvt togetter
+
 source $HOME/.nvim/conf.d/plug.vim
 
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
@@ -41,7 +43,7 @@ Plug 'itchyny/lightline.vim'
 " Plug 'vim-airline/vim-airline'          " pacman -S community/powerline-fonts
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Raimondi/delimitMate'             " <S-Tab> jump over
-P lug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 " Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'             " hmm ..?
@@ -93,7 +95,7 @@ Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 "*****************************************************************************
 "*****************************************************************************
 
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 " Plug 'vim-scripts/YankRing.vim'   " access yank registers
 
 Plug 'amiorin/vim-project'
@@ -106,6 +108,12 @@ Plug 'roxma/nvim-completion-manager'
 
 " Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 " Plug 'autozimu/LanguageClient-neovim'
+" requires jetbrains/phpstorm-stubs
+" composer require felixfbecker/language-server
+
+" language server
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins'  }
+Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs', 'for': 'php'}
 " requires jetbrains/phpstorm-stubs
 " composer require felixfbecker/language-server
 
@@ -149,8 +157,6 @@ Plug 'vim-scripts/matchit.zip'
 
 Plug 'myusuf3/numbers.vim'
 
-Plug 'altercation/vim-colors-solarized'
-
 " close <tags> when </ is encounterd or C-_
 Plug 'docunext/closetag.vim'
 
@@ -164,13 +170,17 @@ Plug 'tpope/vim-speeddating'  " better <c-a> <c-z>
 
 Plug 'sjl/gundo.vim'
 
-Plug 'iCyMind/NeoSolarized'
-
-Plug 'vim-scripts/EasyMotion'
+" Plug 'vim-scripts/EasyMotion'
 Plug 'kshenoy/vim-signature'
 
 """ legacy """
 " Plug 'tpope/vim-abolish'
+
+Plug 'altercation/vim-colors-solarized'
+Plug 'iCyMind/NeoSolarized'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+
 
 call plug#end()
 
@@ -235,9 +245,6 @@ else
     set shell=/bin/sh
 endif
 
-set background=dark
-colorscheme solarized
-
 " Required:
 filetype plugin indent on
 
@@ -245,28 +252,6 @@ filetype plugin indent on
 "
 " airline/lightline show --INSERT-- nice too
 set noshowmode
-
-let g:lightline = {
-      \ 'colorscheme': 'solarized',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified'],
-      \             [ 'charvalue', 'position' ],
-      \           ],
-      \   'right': [
-      \              [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'git', 'fileformat', 'fileencoding', 'filetype' ],
-      \            ]
-      \ },
-      \ 'component': {
-      \   'charvalue': '%b 0x%B',
-      \   'position': '%o 0x%O',
-      \ },
-      \ 'component_function': {
-      \   'git': 'fugitive#statusline'
-      \ },
-      \ }
 
 " session management
 let g:session_directory = "~/.config/nvim/session"
@@ -337,6 +322,42 @@ nnoremap N Nzzzv
 if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
 endif
+
+" visual settings
+
+let g:lightline = {
+      \ 'colorscheme': 'challenger_deep',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified'],
+      \             [ 'charvalue', 'position' ],
+      \           ],
+      \   'right': [
+      \              [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'git', 'fileformat', 'fileencoding', 'filetype' ],
+      \            ]
+      \ },
+      \ 'component': {
+      \   'charvalue': '%b 0x%B',
+      \   'position': '%o 0x%O',
+      \ },
+      \ 'component_function': {
+      \   'git': 'fugitive#statusline'
+      \ },
+      \ }
+
+" prefixing visualities with \
+""
+noremap <silent>\cd :colorscheme challenger_deep<CR>
+noremap <silent>\pc :colorscheme PaperColor<CR>
+noremap <silent>\sol :colorscheme solarized<CR>
+noremap <silent>\d :set background=dark<CR>
+noremap <silent>\l :set background=light<CR>
+
+" colorscheme solarized
+colorscheme challenger_deep
+set background=dark
 
 "*****************************************************************************
 "" Abbreviations
@@ -412,10 +433,6 @@ noremap <Leader>px :%s/></>\r</g<CR> gg=G<CR>
 "     autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
 " augroup END
 
-" visual settings
-noremap <silent><Leader>cd :colorscheme desert<CR>
-noremap <silent><Leader>cl :colorscheme morning<CR>
-
 " highlight same word
 noremap <Leader>h :exe "let HlUnderCursor=exists(\"HlUnderCursor\")?HlUnderCursor*-1+1:1"<CR>
 
@@ -464,21 +481,19 @@ noremap <silent><Leader>b6 :buffer 6<CR>
 noremap <silent><Leader>b7 :buffer 7<CR>
 noremap <silent><Leader>b8 :buffer 8<CR>
 noremap <silent><Leader>b9 :buffer 9<CR>
+
 " Goto Buffer!
-nnoremap <Leader>b :ls<CR>:b<Space>
+nnoremap <Leader>bb :ls<CR>:b<Space>
 
 "" Close buffer
-noremap <Leader>c :bd<CR>
+noremap <Leader>bc :bd<CR>
 
 " quit quick
 noremap <Leader>. :quit<CR>
 noremap <Leader><Leader> <c-^>
-noremap <Leader>el 0D
 
 noremap <silent><Leader>s :Startify <CR>
 noremap <silent><Leader>p :Welcome <CR>
-noremap <silent><Leader>cd :colorscheme desert<CR>
-noremap <silent><Leader>cl :colorscheme morning<CR>
 
 " highlight same word
 noremap <Leader>h :exe "let HlUnderCursor=exists(\"HlUnderCursor\")?HlUnderCursor*-1+1:1"<CR>
@@ -540,7 +555,7 @@ noremap <Leader>nn :NumbersToggle<CR>
 " signify
 
 "" Set working directory
-nnoremap <Leader>. :lcd %:p:h<CR>
+" nnoremap <Leader>. :lcd %:p:h<CR>
 
 "" Opens an edit command with the path of the currently edited file filled in
 noremap <Leader>ee :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -758,3 +773,8 @@ source $HOME/.nvim/conf.d/php_man.vim
 source $HOME/.nvim/conf.d/project.vim
 source $HOME/.nvim/conf.d/sclable.vim
 source $HOME/.nvim/conf.d/xdebug-mrv-cockpit.vim
+
+" ctrl-space
+let g:CtrlSpaceSaveWorkspaceOnExit = 1
+let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
+let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
