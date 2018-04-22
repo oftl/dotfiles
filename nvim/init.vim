@@ -9,7 +9,7 @@
 
 " change light/dark of (n)vim and urxvt togetter
 
-source $HOME/.nvim/conf.d/plug.vim
+source $HOME/.config/nvim/plug.vim
 
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 
@@ -40,7 +40,6 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
-" Plug 'vim-airline/vim-airline'          " pacman -S community/powerline-fonts
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Raimondi/delimitMate'             " <S-Tab> jump over
 Plug 'majutsushi/tagbar'
@@ -60,7 +59,6 @@ Plug 'xolox/vim-session'
 
 " TODO see if i want or need snippets
 " Plug 'SirVer/ultisnips'
-" Plug 'Shougo/deoplete.nvim'
 " Plug 'honza/vim-snippets'
 
 " :set paste automatically
@@ -103,26 +101,38 @@ Plug 'mhinz/vim-startify'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
 " completion
-" arch: community/python-mistune community/python-jediw community/python-setproctitle extra/psutils
-Plug 'roxma/nvim-completion-manager'
 
-" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
-" Plug 'autozimu/LanguageClient-neovim'
+" PACMAN, community/python-mistune community/python-jediw community/python-setproctitle extra/psutils
+" Plug 'roxma/nvim-completion-manager'
 " requires jetbrains/phpstorm-stubs
 " composer require felixfbecker/language-server
 
 " language server
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins'  }
-Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs', 'for': 'php'}
+" Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins'  }
+" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs', 'for': 'php'}
 " requires jetbrains/phpstorm-stubs
 " composer require felixfbecker/language-server
+
+" deoplete
+" Plug 'Shougo/deoplete.nvim'
+
+" " "" phpactor
+Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
+" Plug 'kristijanhusak/deoplete-phpactor'
+
+"" phpcd
+" AUR, aur/php-msgpack; pcntl is compiled in on arch :)
+Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
+
+" vue.js
+Plug 'posva/vim-vue'
 
 "" php
 Plug 'phpactor/phpactor', {'do': 'composer install'}
 Plug 'roxma/ncm-phpactor'
-Plug 'StanAngeloff/php.vim'         "syntax
-Plug 'stephpy/vim-php-cs-fixer'
-Plug 'arnaud-lb/vim-php-namespace'
+" Plug 'StanAngeloff/php.vim'         "syntax
+" Plug 'stephpy/vim-php-cs-fixer'
+" Plug 'arnaud-lb/vim-php-namespace'
 " php-doc generation
 " Plug 'tobyS/pdv'
 " Plug 'tobyS/vmustache'
@@ -326,7 +336,7 @@ endif
 " visual settings
 
 let g:lightline = {
-      \ 'colorscheme': 'challenger_deep',
+      \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified'],
@@ -348,16 +358,23 @@ let g:lightline = {
       \ }
 
 " prefixing visualities with \
-""
-noremap <silent>\cd :colorscheme challenger_deep<CR>
-noremap <silent>\pc :colorscheme PaperColor<CR>
 noremap <silent>\sol :colorscheme solarized<CR>
 noremap <silent>\d :set background=dark<CR>
 noremap <silent>\l :set background=light<CR>
 
-" colorscheme solarized
-colorscheme challenger_deep
+colorscheme solarized
 set background=dark
+
+" color tweaks to go with solarized
+" quite helpful: ~/.nvim/plugged/vim-signify/showcolors.bash
+"" signify
+highlight SignifySignAdd    cterm=bold ctermbg=8  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=8  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=8  ctermfg=227
+"" empty sign column lines
+highlight SignColumn        cterm=bold ctermbg=8
+"" number's column
+highlight LineNr            cterm=bold ctermbg=8
 
 "*****************************************************************************
 "" Abbreviations
@@ -651,6 +668,11 @@ autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
 let g:javascript_enable_domhtmlcss = 1
 
 " php
+autocmd FileType php setlocal omnifunc=phpactor#Complete
+"" ncm-phpactor
+"" don't give |ins-completion-menu| messages.  For example,
+" " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+"set shortmess+=c
 
 " python
 " vim-python
@@ -683,43 +705,6 @@ let g:polyglot_disabled = ['python', 'elm']
 "" Convenience variables
 "*****************************************************************************
 
-" " vim-airline
-" if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
-" endif
-
-" " let g:airline_powerline_fonts = 1
-" if !exists('g:airline_powerline_fonts')
-"   let g:airline#extensions#tabline#left_sep = ' '
-"   let g:airline#extensions#tabline#left_alt_sep = '|'
-"   let g:airline_left_sep          = '▶'
-"   let g:airline_left_alt_sep      = '»'
-"   let g:airline_right_sep         = '◀'
-"   let g:airline_right_alt_sep     = '«'
-"   let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-"   let g:airline#extensions#readonly#symbol   = '⊘'
-"   let g:airline#extensions#linecolumn#prefix = '¶'
-"   let g:airline#extensions#paste#symbol      = 'ρ'
-"   let g:airline_symbols.linenr    = '␊'
-"   let g:airline_symbols.branch    = '⎇'
-"   let g:airline_symbols.paste     = 'ρ'
-"   let g:airline_symbols.paste     = 'Þ'
-"   let g:airline_symbols.paste     = '∥'
-"   let g:airline_symbols.whitespace = 'Ξ'
-" else
-"   let g:airline#extensions#tabline#left_sep = ''
-"   let g:airline#extensions#tabline#left_alt_sep = ''
-
-"   " powerline symbols
-"   let g:airline_left_sep = ''
-"   let g:airline_left_alt_sep = ''
-"   let g:airline_right_sep = ''
-"   let g:airline_right_alt_sep = ''
-"   let g:airline_symbols.branch = ''
-"   let g:airline_symbols.readonly = ''
-"   let g:airline_symbols.linenr = ''
-" endif
-
 " delmitMate
 let delimitMate_expand_space=1
 let delimitMate_expand_cr = 1
@@ -746,6 +731,8 @@ nmap <Leader>tt :call phpactor#Transform()<CR>
 nmap <Leader>cc :call phpactor#ClassNew()<CR>
 " Extract method from selection
 vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
+" type information
+nnoremap <silent><Leader>d :call phpactor#OffsetTypeInfo()<CR>
 
 " php-cs-fixer
 nnoremap <silent><Leader>pcd :call PhpCsFixerFixDirectory()<CR>
@@ -769,10 +756,10 @@ nnoremap <Leader>gd :SignifyDebug<CR>
 """ gutentags
 let g:gutentags_ctags_exclude = ['.cache', '.yarn', '.git', '.svn']
 
-source $HOME/.nvim/conf.d/php_man.vim
-source $HOME/.nvim/conf.d/project.vim
-source $HOME/.nvim/conf.d/sclable.vim
-source $HOME/.nvim/conf.d/xdebug-mrv-cockpit.vim
+source $HOME/.config/nvim/php_man.vim
+source $HOME/.config/nvim/project.vim
+source $HOME/.config/nvim/work.vim
+source $HOME/.config/nvim/xdebug-mrv-cockpit.vim
 
 " ctrl-space
 let g:CtrlSpaceSaveWorkspaceOnExit = 1
