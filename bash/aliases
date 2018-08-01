@@ -1,0 +1,34 @@
+alias less='less -R'
+alias diff='colordiff || diff'
+alias mtr='mtr --curses'
+alias torbrowser='~/bin/tor-browser_en-US/start-tor-browser'
+alias mp32wav='for file in *mp3; do  mp3-decoder "$file" -w "$file.wav"; done'
+alias ogg2wav='for file in *ogg; do  oggdec "$file"; done'
+alias flac2wav='for file in *; do flac -d "$file" ; done'
+alias pacmd="rlwrap --case-insensitive --prompt-colour=yellow --break-chars='(){}[],+=&^%$#@"";|\' --file ~/.rlwrap.pacmd pacmd"
+alias ls='ls --color=auto'
+alias bc='bc -lq'
+
+# bsd cal/ncal:
+# alias cal='ncal -M || cal'
+# util-linux cal:
+alias cal='cal --week --color --three --monday'
+
+# grep
+export GREP_COLOR='1;30;43'
+alias grep='grep --colour=auto'
+
+alias pgrep='pgrep -a'
+alias mplayer-sv='mplayer -fs -volume 70 -softvol -softvol-max'
+
+alias java-repl='java -jar $HOME/src/java-repl/build/libs/javarepl-dev.jar'
+alias ldp=lbdbq
+
+# alias cat='highlight -O ansi'
+alias diff=colordiff
+
+alias java-repl='java -jar $HOME/src/java-repl/build/libs/javarepl-dev.jar'
+
+alias weather='curl wttr.in/~Vienna'
+alias dada='umask 0077 && gpg --decrypt ~/.dada.gpg | less'
+alias dada-bump='umask 0077 && gpg --decrypt ~/.dada.gpg > ~/.dada && vim ~/.dada ; gpg --encrypt ~/.dada && wipe ~/.dada'

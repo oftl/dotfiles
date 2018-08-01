@@ -1,0 +1,20 @@
+IN="LVDS1"
+EXT="VGA1"
+xrandr --output $IN --auto --output $EXT --primary --auto --right-of $IN
+
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[[ -f ~/.Xresources.solarized ]] && xrdb -merge ~/.Xresources.solarized
+[[ -f ~/.Xresources.urxvt ]] && xrdb -merge ~/.Xresources.urxvt
+[[ -f ~/.Xresources.keys ]] && xrdb -merge ~/.Xresources.keys
+
+[[ -f ~/.xmodmaprc ]] && xmodmap ~/.xmodmaprc
+[[ -f ~/.xdotoolrc ]] && sh ~/.xdotoolrc
+
+# screw you, capslock!
+setxkbmap -option ctrl:nocaps
+
+feh --bg-fill .wallpaper.jpg
+
+export TERM=screen-256color  # tmux relies on this heavily
+
+mousetrap -t 2 &

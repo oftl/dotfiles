@@ -1,3 +1,31 @@
+" hide NERDTree/tagbar on :Gblame (and possibly others)
+" sync open/open-focus/others? between nerdtree and tagbar
+
+"read NERDTree docs
+"fix vue stuffs
+
+" change light/dark of (n)vim and urxvt togetter
+" http://blog.joncairns.com/2012/05/using-vim-as-a-php-ide/
+
+source $HOME/.config/nvim/plug.vim
+
+let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
+
+if !filereadable(vimplug_exists)
+  if !executable("curl")
+    echoerr "You have to install curl or first install vim-plug yourself!"
+    execute "q!"
+  endif
+  echo "Installing Vim-Plug..."
+  echo ""
+  silent !\curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  let g:not_finish_vimplug = "yes"
+
+  autocmd VimEnter * PlugInstall
+endif
+
+let mapleader=','
+
 call plug#begin(expand('~/.config/nvim/plugged'))
 
 "*****************************************************************************
@@ -16,35 +44,47 @@ Plug 'Raimondi/delimitMate'             " <S-Tab> jump over
 Plug 'majutsushi/tagbar'
 " Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
+
 Plug 'sheerun/vim-polyglot'             " hmm ..?
+
+" find things
+Plug 'junegunn/fzf'                 " pacman -S community/fzf ... b0rken?
 Plug 'junegunn/fzf.vim'                 " pacman -S community/fzf ... b0rken?
+Plug 'wincent/ferret'   " pacman -Ss ripgrep
+Plug 'wincent/loupe'    " enhance search
 
 "" Vim-Session
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 
-" TODO see if i want or need snippets       
+" TODO see if i want or need snippets
 " Plug 'SirVer/ultisnips'
-" Plug 'Shougo/deoplete.nvim'
 " Plug 'honza/vim-snippets'
 
+" :set paste automatically
+Plug 'ConradIrwin/vim-bracketed-paste'
+
 "*****************************************************************************
-"" Custom bundles
+"" LANG
 "*****************************************************************************
 
 " elm
 "" Elm Bundle
-Plug 'elmcast/elm-vim'
+Plug 'w0rp/ale'
+" wtf?
+source ~/.config/nvim/plugged/elm-vim/autoload/elm/util.vim
+source ~/.config/nvim/plugged/elm-vim/autoload/elm.vim
+Plug 'ElmCast/elm-vim'
 
 " haskell
-"" Haskell Bundle
+" Haskell Bundle
 Plug 'eagletmt/neco-ghc'
 Plug 'dag/vim2hs'
 Plug 'pbrisbin/vim-syntax-shakespeare'
 
 " javascript
 "" Javascript Bundle
-Plug 'jelera/vim-javascript-syntax'
+" Plug 'jelera/vim-javascript-syntax'
 
 " JavaScript bundle for vim, this bundle provides syntax highlighting and improved indentation.
 " Plug 'pangloss/vim-javascript'
@@ -57,38 +97,55 @@ Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 "*****************************************************************************
 "*****************************************************************************
 
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 " Plug 'vim-scripts/YankRing.vim'   " access yank registers
 
 Plug 'amiorin/vim-project'
 Plug 'mhinz/vim-startify'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
-" pacman -Ss ripgrep
-Plug 'wincent/ferret'
-Plug 'wincent/loupe'    "enhance search
-
 " completion
-" pacman -S community/python-mistune community/python-jediw community/python-setproctitle extra/psutils
-Plug 'roxma/nvim-completion-manager'
 
-"" php
-Plug 'phpactor/phpactor', {'do': 'composer install'} " completion
-Plug 'roxma/ncm-phpactor'  " completion
-
-" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
-" Plug 'autozimu/LanguageClient-neovim'
+" PACMAN, community/python-mistune community/python-jediw community/python-setproctitle extra/psutils
+" Plug 'roxma/nvim-completion-manager'
 " requires jetbrains/phpstorm-stubs
 " composer require felixfbecker/language-server
 
-" php
-Plug 'StanAngeloff/php.vim'         "syntax
-Plug 'stephpy/vim-php-cs-fixer'
-Plug 'arnaud-lb/vim-php-namespace'
-Plug 'joonty/vdebug'
+" language server
+" Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins'  }
+" Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs', 'for': 'php'}
+" requires jetbrains/phpstorm-stubs
+" composer require felixfbecker/language-server
+
+" deoplete
+Plug 'Shougo/deoplete.nvim'
+
+" " "" phpactor
+" Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
+" Plug 'kristijanhusak/deoplete-phpactor'
+
+"" phpcd
+" AUR, aur/php-msgpack; pcntl is compiled in on arch :)
+" Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
+
+" vue.js
+Plug 'posva/vim-vue'
+
+"" php
+" Plug 'phpactor/phpactor', {'do': 'composer install'}
+" Plug 'roxma/ncm-phpactor'
+" Plug 'StanAngeloff/php.vim'         "syntax
+" Plug 'stephpy/vim-php-cs-fixer'
+" Plug 'arnaud-lb/vim-php-namespace'
 " php-doc generation
 " Plug 'tobyS/pdv'
 " Plug 'tobyS/vmustache'
+
+" xdebug integration
+Plug 'joonty/vdebug'
+
+"" typescript
+" Plug 'mhartington/nvim-typescript'
 
 Plug 'neomake/neomake'
 " PHP Mess Detector         yaourt phpmd
@@ -111,10 +168,8 @@ Plug 'tmux-plugins/vim-tmux'
 
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/matchit.zip'
-Plug 'sjl/gundo.vim'
-Plug 'myusuf3/numbers.vim'
 
-Plug 'altercation/vim-colors-solarized'
+Plug 'myusuf3/numbers.vim'
 
 " close <tags> when </ is encounterd or C-_
 Plug 'docunext/closetag.vim'
@@ -123,14 +178,29 @@ Plug 'docunext/closetag.vim'
 " Plug 'corntrace/bufexplorer'
 
 " let plugins do .!
-" Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-jdaddy'
 Plug 'tpope/vim-speeddating'  " better <c-a> <c-z>
 
+Plug 'sjl/gundo.vim'
+
+" Plug 'vim-scripts/EasyMotion'
+Plug 'kshenoy/vim-signature'
+
+""" legacy """
+" Plug 'tpope/vim-abolish'
+
+Plug 'altercation/vim-colors-solarized'
+Plug 'iCyMind/NeoSolarized'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+
+"" http://vim.wikia.com/wiki/Improved_hex_editing
+Plug 'fidian/hexmode'
+
+
 call plug#end()
 
-" Required:
-filetype plugin indent on
 
 "*****************************************************************************
 "" Basic Setup
@@ -143,9 +213,6 @@ set fileencodings=utf-8
 " XXX WTF ?
 "" Fix backspace indent
 set backspace=indent,eol,start
-
-"" Map leader to ,
-let mapleader=','
 
 "" Directories for swp files
 set nobackup
@@ -171,8 +238,12 @@ filetype indent on
 """ searching
 set incsearch
 set smartcase  " ignore case for only-lowercase words
-set hlsearch
+:set hlsearch
 noremap <Space> :set hlsearch! hlsearch?<CR>  " turn highlight of search on/off
+
+" These will make it so that going to the next one in a search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 """ UI
 set showcmd
@@ -195,13 +266,80 @@ else
     set shell=/bin/sh
 endif
 
-set background=dark
-colorscheme solarized
+" Required:
+filetype plugin indent on
 
 " set statusline=%F%m%r%h%w%=[%p%%]\ [%l/%c]\ [%b/0x%B]\ [%f/%{&ff}/%Y]
 "
 " airline/lightline show --INSERT-- nice too
 set noshowmode
+
+" session management
+let g:session_directory = "~/.config/nvim/session"
+let g:session_autoload = "no"
+let g:session_autosave = "no"
+let g:session_command_aliases = 1
+
+"*****************************************************************************
+"" Visual Settings
+"*****************************************************************************
+syntax on
+set ruler
+set number
+
+let no_buffers_menu=1
+
+"" Disable the blinking cursor.
+set gcr=a:blinkon0
+set scrolloff=3
+
+" " If cursor is in first or last line of window, scroll to middle line.
+" function s:MaybeMiddle()
+"   if winline() == 1 || winline() == winheight(0)
+"     normal! zz
+"   endif
+" endfunction
+"
+" nnoremap <silent> n n:call <SID>MaybeMiddle()<CR>
+" nnoremap <silent> N N:call <SID>MaybeMiddle()<CR>
+
+" " highlight stuff (moved to plugins... :/)
+" " parentesis
+" highlight MatchParen cterm=none ctermbg=none ctermfg=white
+" " trailing whitespace
+" highlight TrailingWhitespace ctermbg=DarkMagenta guibg=DarkMagenta
+" match TrailingWhitespace /\s\+$/
+" " protect from colour schema
+" autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+
+" " highlight same concept (1)
+" autocmd CursorMoved * exe exists("HlUnderCursor")?HlUnderCursor?printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\')):'match none':""
+
+"" Status bar
+set laststatus=2
+
+" XXX WTF ?
+"" Use modeline overrides
+set modeline
+set modelines=10
+
+" set title
+set titleold="Prosole"
+set titlestring=%F
+
+" long line
+set wrap
+set wrapmargin=2
+set linebreak
+set breakindent
+set showbreak="b> "
+" set textwidth=79
+
+if exists("*fugitive#statusline")
+  set statusline+=%{fugitive#statusline()}
+endif
+
+" visual settings
 
 let g:lightline = {
       \ 'colorscheme': 'solarized',
@@ -225,53 +363,30 @@ let g:lightline = {
       \ },
       \ }
 
-" session management
-let g:session_directory = "~/.config/nvim/session"
-let g:session_autoload = "no"
-let g:session_autosave = "no"
-let g:session_command_aliases = 1
+"" prefixing visualities with \
+"
+noremap <silent>\sol :colorscheme solarized<CR>
+noremap <silent>\d :set background=dark<CR>
+noremap <silent>\l :set background=light<CR>
 
-"*****************************************************************************
-"" Visual Settings
-"*****************************************************************************
-syntax on
-set ruler
-set number
+set cursorline
+nnoremap <silent>\l :set cursorline! <CR>
+" set cursorcolumn
+nnoremap <silent>\c :set cursorcolumn! <CR>
 
-let no_buffers_menu=1
+colorscheme solarized
+set background=dark
 
-"" Disable the blinking cursor.
-set gcr=a:blinkon0
-set scrolloff=3
-
-"" Status bar
-set laststatus=2
-
-" XXX WTF ?
-"" Use modeline overrides
-set modeline
-set modelines=10
-
-" set title
-set titleold="Prosole"
-set titlestring=%F
-
-" long line
-set wrap
-set wrapmargin=2
-set linebreak
-set breakindent
-set showbreak="b> "
-set textwidth=79
-
-" Search mappings: These will make it so that going to the next one in a
-" search will center on the line it's found in.
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
+" color tweaks to go with solarized
+" quite helpful: ~/.nvim/plugged/vim-signify/showcolors.bash
+"" signify
+highlight SignifySignAdd    cterm=bold ctermbg=8  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=8  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=8  ctermfg=227
+"" empty sign column lines
+highlight SignColumn        cterm=bold ctermbg=8
+"" number's column
+highlight LineNr            cterm=bold ctermbg=8
 
 "*****************************************************************************
 "" Abbreviations
@@ -293,14 +408,14 @@ let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
+let g:nerdtree_tabs_focus_on_files=0
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-nnoremap <silent> <F3> :NERDTreeToggle<CR>
+let g:NERDTreeWinPos = 'left'
+" nnoremap <silent> <F2> :NERDTreeFind<CR>
 
 " terminal emulation
-nnoremap <silent> <leader>sh :terminal<CR>
+nnoremap <silent> <Leader>sh :terminal<CR>
 
 "*****************************************************************************
 "" Autocmd Rules
@@ -336,7 +451,39 @@ set autoread
 "*****************************************************************************
 noremap <silent><Leader>, :blast<CR>
 
+" pretty print
+"" XML
+"" old" noremap <Leader>px :%s/></>\r</g<CR>:0<CR>=:$<CR>
+noremap <Leader>px :%s/></>\r</g<CR> gg=G<CR>
+
+" hm ?
+" augroup XML
+"     autocmd!
+"     autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+" augroup END
+
+" highlight same word
+noremap <Leader>h :exe "let HlUnderCursor=exists(\"HlUnderCursor\")?HlUnderCursor*-1+1:1"<CR>
+
 noremap <Leader>a :Ack
+noremap <Leader>g :GundoToggle <CR>
+
+" word processer
+" justify text (needs `par`)
+noremap <Leader>aj vip :!par -w80 -j <CR>
+" center
+noremap <Leader>ac vip :center 80 <CR>
+" right align
+noremap <Leader>ar vip :right 80 <CR>
+" spellchecking
+noremap <Leader>sp :setlocal spell spelllang=de <CR>
+noremap <Leader>spe :setlocal spell spelllang=en <CR>
+noremap <Leader>sn :set nospell  <CR>
+
+" remove trailing whitespace
+noremap <Leader>tw :%s/ *$//g <CR>
+" remove leading whitespace
+noremap <Leader>tl :%s/^ *//g <CR>
 
 " tabs
 noremap <silent><Leader>tn :tabnew<CR>
@@ -363,16 +510,24 @@ noremap <silent><Leader>b6 :buffer 6<CR>
 noremap <silent><Leader>b7 :buffer 7<CR>
 noremap <silent><Leader>b8 :buffer 8<CR>
 noremap <silent><Leader>b9 :buffer 9<CR>
+
 " Goto Buffer!
-nnoremap <Leader>b :ls<CR>:b<Space>
+nnoremap <Leader>bb :ls<CR>:b<Space>
 
 "" Close buffer
-noremap <leader>c :bd<CR>
+noremap <Leader>bc :bd<CR>
+
+nnoremap <silent> <Leader>b :Buffers<CR>
+
+" ?!? " cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+nnoremap <silent> <Leader>e :FZF -m<CR>
+
+" quit quick
+noremap <Leader>. :quit<CR>
+noremap <Leader><Leader> <c-^>
 
 noremap <silent><Leader>s :Startify <CR>
 noremap <silent><Leader>p :Welcome <CR>
-noremap <silent><Leader>cd :colorscheme desert<CR>
-noremap <silent><Leader>cl :colorscheme morning<CR>
 
 " highlight same word
 noremap <Leader>h :exe "let HlUnderCursor=exists(\"HlUnderCursor\")?HlUnderCursor*-1+1:1"<CR>
@@ -415,22 +570,26 @@ noremap <Leader>gr :Gremove<CR>
 nnoremap <Leader>go :.Gbrowse<CR>
 
 " session management
-nnoremap <leader>so :OpenSession<Space>
-nnoremap <leader>ss :SaveSession<Space>
-nnoremap <leader>sd :DeleteSession<CR>
-nnoremap <leader>sc :CloseSession<CR>
+nnoremap <Leader>so :OpenSession<Space>
+nnoremap <Leader>ss :SaveSession<Space>
+nnoremap <Leader>sd :DeleteSession<CR>
+nnoremap <Leader>sc :CloseSession<CR>
 
 " delete/yank paragraph
 nnoremap <Leader>dp vip d
 nnoremap <Leader>dy vip y
 
-noremap <Leader>n :NERDTreeTabsToggle
-noremap <Leader>t :TagbarToggle
+" panels and the like
+nnoremap <Leader>nt :NERDTreeToggle <CR> :TagbarToggle <CR>
+noremap <Leader>n :NERDTreeTabsToggle <CR>
+noremap <Leader>t :TagbarToggle <CR>
+
+" numbers
 noremap <Leader>nn :NumbersToggle<CR>
-noremap <Leader>c :close <CR>
+" signify
 
 "" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
+" nnoremap <Leader>. :lcd %:p:h<CR>
 
 "" Opens an edit command with the path of the currently edited file filled in
 noremap <Leader>ee :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -447,10 +606,6 @@ if executable('rg')
   set grepprg=rg\ --vimgrep
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 endif
-
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>e :FZF -m<CR>
 
 " snippets
 " let g:UltiSnipsExpandTrigger="<tab>"
@@ -469,6 +624,8 @@ nnoremap <silent> <leader>e :FZF -m<CR>
 
 " Tagbar
 let g:tagbar_autofocus = 1
+let g:tagbar_vertical = 25
+let g:tagbar_left = 1
 
 "" Copy/Paste/Cut
 if has('unnamedplus')
@@ -489,15 +646,16 @@ vmap > >gv
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-set path=.,**
-nnoremap <Leader>f :find *
-nnoremap <Leader>s :sfind *
-nnoremap <Leader>v :vert sfind *
-nnoremap <Leader>t :tabfind *
-nnoremap <Leader>F :find <C-R>=expand('%:h').'/*'<CR>
-nnoremap <Leader>S :sfind <C-R>=expand('%:h').'/*'<CR>
-nnoremap <Leader>V :vert sfind <C-R>=expand('%:h').'/*'<CR>
-nnoremap <Leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
+" TODO consolidate with other mappings
+" set path=.,**
+" nnoremap <Leader>f :find *
+" nnoremap <Leader>s :sfind *
+" nnoremap <Leader>v :vert sfind *
+" nnoremap <Leader>t :tabfind *
+" nnoremap <Leader>F :find <C-R>=expand('%:h').'/*'<CR>
+" nnoremap <Leader>S :sfind <C-R>=expand('%:h').'/*'<CR>
+" nnoremap <Leader>V :vert sfind <C-R>=expand('%:h').'/*'<CR>
+" nnoremap <Leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
 
 "*****************************************************************************
 "" Custom configs
@@ -505,8 +663,17 @@ nnoremap <Leader>T :tabfind <C-R>=expand('%:h').'/*'<CR>
 
 " elm
 " elm-vim
-let g:elm_setup_keybindings = 0
+" let g:elm_setup_keybindings = 0
+" let g:elm_format_autosave = 1
+let g:elm_jump_to_error = 1
+let g:elm_make_output_file = "elm.js"
+let g:elm_make_show_warnings = 0
+let g:elm_syntastic_show_warnings = 0
+let g:elm_browser_command = ""
+let g:elm_detailed_complete = 0
 let g:elm_format_autosave = 1
+let g:elm_format_fail_silently = 0
+let g:elm_setup_keybindings = 1
 
 " syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -514,7 +681,7 @@ let g:syntastic_auto_loc_list = 1
 let g:elm_syntastic_show_warnings = 1
 
 " haskell
-let g:haskell_conceal_wide = 1
+let g:haskell_conceal_wide = 0
 let g:haskell_multiline_strings = 1
 let g:necoghc_enable_detailed_browse = 1
 autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
@@ -523,33 +690,40 @@ autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
 let g:javascript_enable_domhtmlcss = 1
 
 " php
+autocmd FileType php setlocal omnifunc=phpactor#Complete
+"" ncm-phpactor
+"" don't give |ins-completion-menu| messages.  For example,
+" " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+"set shortmess+=c
 
 " python
 " vim-python
 augroup vimrc-python
   autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
+  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=0
+  " autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8
       \ formatoptions+=croq softtabstop=4
       \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 augroup END
 
 " jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#popup_on_dot = 1  " might slow us down
+let g:jedi#goto_assignments_command = "<Leader>g"
+let g:jedi#goto_definitions_command = "<Leader>d"
 let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#smart_auto_mappings = 0
+let g:jedi#usages_command = "<Leader>n"
+let g:jedi#rename_command = "<Leader>r"
+let g:jedi#show_call_signatures = "1"
+" let g:jedi#smart_auto_mappings = "0"
+let g:jedi#completions_command = "<C-N>"
+let g:jedi#use_splits_not_buffers = 'bottom'
 
 " Syntax highlight
 let python_highlight_all = 1
 
 " polyglot
 " Default highlight is better than polyglot
-let g:polyglot_disabled = ['python', 'elm']
+let g:polyglot_disabled = ['python', 'elm', 'haskell']
 
 "*****************************************************************************
 "" Convenience variables
@@ -594,7 +768,87 @@ let g:polyglot_disabled = ['python', 'elm']
 
 " delmitMate
 let delimitMate_expand_space=1
+let delimitMate_expand_cr = 1
+
+" numbers
+let g:numbers_exclude = ['help', 'nerdtree', 'unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'vundle']
 
 " indentLine
 let g:indentLine_bufTypeExclude = ['help', 'terminal']
 let g:indentLine_bufNameExclude = ['NERDTree*', '__Tagbar__*']
+
+" phpactor
+" http://phpactor.github.io/phpactor/vim-plugin.html
+"
+" Include use statement
+nmap <Leader>u :call phpactor#UseAdd()<CR>
+" Invoke the context menu
+nmap <Leader>mm :call phpactor#ContextMenu()<CR>
+" Goto definition of class or class member under the cursor
+nmap <Leader>o :call phpactor#GotoDefinition()<CR>
+" Transform the classes in the current file
+nmap <Leader>tt :call phpactor#Transform()<CR>
+" Generate a new class (replacing the current file)
+nmap <Leader>cc :call phpactor#ClassNew()<CR>
+" Extract method from selection
+vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
+" type information
+nnoremap <silent><Leader>d :call phpactor#OffsetTypeInfo()<CR>
+
+" php-cs-fixer
+nnoremap <silent><Leader>pcd :call PhpCsFixerFixDirectory()<CR>
+nnoremap <silent><Leader>pcf :call PhpCsFixerFixFile()<CR>
+
+""" neomake
+call neomake#configure#automake('w')
+
+" fzf, mnemonic: <f>ind file
+noremap <silent><Leader>f :Files<CR>
+" ferret, mnemonic: <a>ck (like perl-ack)
+noremap <silent><Leader>a :Ack <CR>
+
+""" signify
+let g:signify_vcs_list = [ 'git', 'svn' ]
+nnoremap <Leader>gt :SignifyToggle<CR>
+nnoremap <Leader>gh :SignifyToggleHighlight<CR>
+nnoremap <Leader>gr :SignifyRefresh<CR>
+nnoremap <Leader>gd :SignifyDebug<CR>
+
+""" gutentags
+let g:gutentags_ctags_exclude = ['.cache', '.yarn', '.git', '.svn']
+
+" source $HOME/.config/nvim/php_man.vim
+" source $HOME/.config/nvim/sclable.vim
+" source $HOME/.nvim/xdebug-mrv-cockpit.vim
+
+" ctrl-space
+nnoremap <C-Space> :CtrlSpace<CR>
+let g:CtrlSpaceSaveWorkspaceOnExit = 1
+let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
+let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
+
+" vim-project
+"
+let g:project_use_nerdtree = 1
+let g:project_enable_welcome = 0
+" source $HOME/.config/nvim/project.vim
+
+" phpcd/deoplete
+" let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete = 1
+
+" call deoplete#custom#option('smart_case', v:true)
+
+" " <C-h>, <BS>: close popup and delete backword char.
+" inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+" " <CR>: close popup and save indent.
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function() abort
+" return deoplete#close_popup() . "\<CR>"
+" endfunction
+
+let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
+let g:deoplete#ignore_sources.php = ['omni']
+let g:deoplete#auto_complete = 1

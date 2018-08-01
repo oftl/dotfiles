@@ -62,7 +62,7 @@ set number
 set laststatus=2
 
 " solarized colour schema
-colorscheme solarized
+" colorscheme solarized
 
 set background=dark
 let g:solarized_termcolors=256

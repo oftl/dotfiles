@@ -1,0 +1,21 @@
+# https://www.debian-administration.org/article/543/Bash_eternal_history
+export HISTTIMEFORMAT="%s "
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER "$(history 1)" >> ~/.bash_history_extended'
+
+if [[ $- = *i* ]]; then
+    if [ -e ~/.bash/liquidprompt ]; then
+        echo 'Loading liquidprompt ...'
+        source ~/.bash/liquidprompt
+    fi
+
+    if [ -e ~/.bash/dir_colors ]; then
+        echo 'Loading dircolors ...'
+        eval `dircolors ~/.bash/dir_colors`
+    fi
+fi
+
+export EDITOR=vim
+
+# https://wiki.archlinux.org/index.php/Color_output_in_console#less_2
+export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
+export LESS='-R '

@@ -5,12 +5,15 @@ set $mod Mod4
 
 focus_follows_mouse no
 
-font pango:monospace 18
+# bender
+font pango:monospace 12
+# gkar
+# font pango:monospace 18
 
 bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
@@ -92,9 +95,14 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym $mod+Shift+i exec ~/bin/display.bash int
+bindsym $mod+Shift+e exec ~/bin/display.bash ext
+bindsym $mod+Shift+d exec ~/bin/display.bash dual
 
 # resize window (you can also use the mouse for that)
+
 bindsym $mod+r mode "R E S I Z E"
 mode "R E S I Z E" {
         bindsym l       resize shrink width 10 px
@@ -132,9 +140,10 @@ bindsym $mod+Ctrl+u exec setxkbmap us
 
 # workspace_auto_back_and_forth yes
 
-# all colors from
-# https://github.com/tobiaszwaszak/i3wm/blob/master/config
-#
+## all colors from
+## https://github.com/tobiaszwaszak/i3wm/blob/master/config
+
+# solarzied
 client.focused          #002b36 #586e75 #fdf6e3 #268bd2
 client.focused_inactive #002b36 #073642 #839496 #073642
 client.unfocused        #002b36 #073642 #839496 #073642
@@ -145,6 +154,7 @@ bar {
     status_command i3status --config ~/.i3/status_top.conf
     position top
     separator_symbol " / "
+    # solarzied
     colors {
         background #002b36
         statusline #839496
@@ -162,6 +172,7 @@ bar {
     position bottom
     separator_symbol " / "
     workspace_buttons no
+    # solarzied
     colors {
         background         #002b36
         statusline         #839496
