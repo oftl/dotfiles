@@ -45,7 +45,7 @@ Plug 'majutsushi/tagbar'
 " Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
 
-Plug 'sheerun/vim-polyglot'             " hmm ..?
+Plug 'sheerun/vim-polyglot'
 
 " find things
 Plug 'junegunn/fzf'                 " pacman -S community/fzf ... b0rken?
