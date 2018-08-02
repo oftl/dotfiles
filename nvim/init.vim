@@ -38,7 +38,6 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
-" Plug 'vim-airline/vim-airline'          " pacman -S community/powerline-fonts
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Raimondi/delimitMate'             " <S-Tab> jump over
 Plug 'majutsushi/tagbar'
@@ -91,7 +90,7 @@ Plug 'pbrisbin/vim-syntax-shakespeare'
 
 " python
 "" Python Bundle
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
 "*****************************************************************************
@@ -120,20 +119,9 @@ Plug 'vim-ctrlspace/vim-ctrlspace'
 " deoplete
 Plug 'Shougo/deoplete.nvim'
 
-" " "" phpactor
-" Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
-" Plug 'kristijanhusak/deoplete-phpactor'
-
-"" phpcd
-" AUR, aur/php-msgpack; pcntl is compiled in on arch :)
-" Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
-
 " vue.js
 Plug 'posva/vim-vue'
 
-"" php
-" Plug 'phpactor/phpactor', {'do': 'composer install'}
-" Plug 'roxma/ncm-phpactor'
 " Plug 'StanAngeloff/php.vim'         "syntax
 " Plug 'stephpy/vim-php-cs-fixer'
 " Plug 'arnaud-lb/vim-php-namespace'
@@ -729,43 +717,6 @@ let g:polyglot_disabled = ['python', 'elm', 'haskell']
 "" Convenience variables
 "*****************************************************************************
 
-" " vim-airline
-" if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
-" endif
-
-" " let g:airline_powerline_fonts = 1
-" if !exists('g:airline_powerline_fonts')
-"   let g:airline#extensions#tabline#left_sep = ' '
-"   let g:airline#extensions#tabline#left_alt_sep = '|'
-"   let g:airline_left_sep          = '▶'
-"   let g:airline_left_alt_sep      = '»'
-"   let g:airline_right_sep         = '◀'
-"   let g:airline_right_alt_sep     = '«'
-"   let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-"   let g:airline#extensions#readonly#symbol   = '⊘'
-"   let g:airline#extensions#linecolumn#prefix = '¶'
-"   let g:airline#extensions#paste#symbol      = 'ρ'
-"   let g:airline_symbols.linenr    = '␊'
-"   let g:airline_symbols.branch    = '⎇'
-"   let g:airline_symbols.paste     = 'ρ'
-"   let g:airline_symbols.paste     = 'Þ'
-"   let g:airline_symbols.paste     = '∥'
-"   let g:airline_symbols.whitespace = 'Ξ'
-" else
-"   let g:airline#extensions#tabline#left_sep = ''
-"   let g:airline#extensions#tabline#left_alt_sep = ''
-
-"   " powerline symbols
-"   let g:airline_left_sep = ''
-"   let g:airline_left_alt_sep = ''
-"   let g:airline_right_sep = ''
-"   let g:airline_right_alt_sep = ''
-"   let g:airline_symbols.branch = ''
-"   let g:airline_symbols.readonly = ''
-"   let g:airline_symbols.linenr = ''
-" endif
-
 " delmitMate
 let delimitMate_expand_space=1
 let delimitMate_expand_cr = 1
@@ -800,7 +751,7 @@ nnoremap <silent><Leader>pcd :call PhpCsFixerFixDirectory()<CR>
 nnoremap <silent><Leader>pcf :call PhpCsFixerFixFile()<CR>
 
 """ neomake
-call neomake#configure#automake('w')
+call neomake#configure#automake('rw', 500)
 
 " fzf, mnemonic: <f>ind file
 noremap <silent><Leader>f :Files<CR>
@@ -817,6 +768,7 @@ nnoremap <Leader>gd :SignifyDebug<CR>
 """ gutentags
 let g:gutentags_ctags_exclude = ['.cache', '.yarn', '.git', '.svn']
 
+<<<<<<< HEAD
 " source $HOME/.config/nvim/php_man.vim
 " source $HOME/.config/nvim/sclable.vim
 " source $HOME/.nvim/xdebug-mrv-cockpit.vim

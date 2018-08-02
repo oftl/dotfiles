@@ -8,7 +8,7 @@ focus_follows_mouse no
 # bender
 font pango:monospace 12
 # gkar
-# font pango:monospace 18
+font pango:monospace 18
 
 bindsym $mod+Return exec i3-sensible-terminal
 
@@ -143,7 +143,6 @@ bindsym $mod+Ctrl+u exec setxkbmap us
 ## all colors from
 ## https://github.com/tobiaszwaszak/i3wm/blob/master/config
 
-# solarzied
 client.focused          #002b36 #586e75 #fdf6e3 #268bd2
 client.focused_inactive #002b36 #073642 #839496 #073642
 client.unfocused        #002b36 #073642 #839496 #073642
