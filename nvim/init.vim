@@ -768,7 +768,6 @@ nnoremap <Leader>gd :SignifyDebug<CR>
 """ gutentags
 let g:gutentags_ctags_exclude = ['.cache', '.yarn', '.git', '.svn']
 
-<<<<<<< HEAD
 " source $HOME/.config/nvim/php_man.vim
 " source $HOME/.config/nvim/sclable.vim
 " source $HOME/.nvim/xdebug-mrv-cockpit.vim
