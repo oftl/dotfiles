@@ -38,6 +38,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
+Plug 'gregsexton/gitv'
 Plug 'itchyny/lightline.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Raimondi/delimitMate'             " <S-Tab> jump over
